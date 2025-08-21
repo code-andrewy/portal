@@ -8,181 +8,189 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary: #0f0c29;
-      --secondary: #302b63;
-      --tertiary: #24243e;
-      --glow: #00ffe0;
-      --text-muted: #cfcfcf;
-      --btn-hover-glow: rgba(0, 255, 224, 0.3);
-    }
+  --primary: #0f0c29;
+  --secondary: #302b63;
+  --tertiary: #24243e;
+  --glow: #00ffe0;
+  --text-muted: #cfcfcf;
+  --btn-hover-glow: rgba(0, 255, 224, 0.3);
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      overflow: auto;
-    }
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
 
-    body {
-      font-family: "Outfit", sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      color: #fff;
-      position: relative;
-    }
+body {
+  font-family: "Outfit", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  color: #fff;
+  position: relative;
+}
 
-    body::before {
-      content: "";
-      position: absolute;
-      top: -20%;
-      left: -20%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(from 0deg, #00ffe0, #7f00ff, #00ffe0);
-      animation: spin 25s linear infinite;
-      opacity: 0.08;
-      z-index: 0;
-    }
+body::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, #00ffe0, #7f00ff, #00ffe0);
+  animation: spin 25s linear infinite;
+  opacity: 0.08;
+  z-index: 0;
+}
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
-    .card {
-      position: relative;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 36px;
-      backdrop-filter: blur(30px);
-      padding: 60px 40px;
-      text-align: center;
-      max-width: 720px;
-      width: 90%;
-      z-index: 1;
-      box-shadow: 0 0 60px rgba(0, 255, 224, 0.15), 0 0 15px rgba(0, 255, 224, 0.06) inset;
-      transition: all 0.3s ease-in-out;
-      animation: float 6s ease-in-out infinite;
-    }
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 36px;
+  backdrop-filter: blur(30px);
+  padding: 60px 40px;
+  text-align: center;
+  max-width: 720px;
+  width: 90%;
+  z-index: 1;
+  box-shadow: 0 0 60px rgba(0, 255, 224, 0.15), 0 0 15px rgba(0, 255, 224, 0.06) inset;
+  transition: all 0.3s ease-in-out;
+  animation: float 6s ease-in-out infinite;
+}
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
 
-    .card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 80px rgba(0, 255, 224, 0.25), 0 0 20px rgba(0, 255, 224, 0.1) inset;
-    }
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 80px rgba(0, 255, 224, 0.25), 0 0 20px rgba(0, 255, 224, 0.1) inset;
+}
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 16px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: #fff;
-    }
+h1 {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #fff;
+}
 
-    #rocket {
-      display: inline-block;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      will-change: transform;
-    }
+#rocket {
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
 
-    #rocket.launching {
-      animation: blastoff 1.2s forwards;
-    }
+#rocket.launching {
+  animation: blastoff 1.2s forwards;
+}
 
-    @keyframes blastoff {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { transform: translateY(-150px) scale(1.2); }
-      100% { transform: translateY(-300px) scale(0.5); opacity: 0; }
-    }
+@keyframes blastoff {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateY(-150px) scale(1.2); }
+  100% { transform: translateY(-300px) scale(0.5); opacity: 0; }
+}
 
-    .typing-text {
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      margin-bottom: 32px;
-      line-height: 1.6;
-      font-weight: 400;
-      min-height: 2.5em;
-    }
+.typing-text {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  line-height: 1.6;
+  font-weight: 400;
+  min-height: 2.5em;
+}
 
-    .glow-btn {
-      position: relative;
-      border: 2px solid var(--glow);
-      background: rgba(0, 255, 224, 0.05);
-      border-radius: 50px;
-      padding: 16px 48px;
-      color: var(--glow);
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(0, 255, 224, 0.3);
-      transform: translateY(0);
-      margin: 14px auto;
-      display: inline-block;
-      min-width: 220px;
-    }
+.glow-btn,
+.glow-btn-link {
+  position: relative;
+  border: 2px solid var(--glow);
+  background: rgba(0, 255, 224, 0.05);
+  border-radius: 50px;
+  padding: 16px 48px;
+  color: var(--glow);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 224, 0.3);
+  transform: translateY(0);
+  margin: 14px auto;
+  display: block;           /* centers the button */
+  text-align: center;       /* centers text */
+  width: fit-content;       /* adjusts to content width */
+  min-width: 220px;
+  text-decoration: none;    /* remove underline for links */
+}
 
-    .glow-btn::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 180%;
-      height: 200%;
-      background: linear-gradient(90deg, #00ffe0, #00bfff, #00ffe0);
-      transform: translate(-50%, -50%) rotate(30deg);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
+.glow-btn::before,
+.glow-btn-link::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180%;
+  height: 200%;
+  background: linear-gradient(90deg, #00ffe0, #00bfff, #00ffe0);
+  transform: translate(-50%, -50%) rotate(30deg);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
-    .glow-btn:hover::before {
-      opacity: 0.1;
-    }
+.glow-btn:hover::before,
+.glow-btn-link:hover::before {
+  opacity: 0.1;
+}
 
-    .glow-btn:hover {
-      background-color: rgba(0, 255, 224, 0.08);
-      box-shadow: 0 0 30px rgba(0, 255, 224, 0.5);
-      transform: translateY(-3px);
-    }
+.glow-btn:hover,
+.glow-btn-link:hover {
+  background-color: rgba(0, 255, 224, 0.08);
+  box-shadow: 0 0 30px rgba(0, 255, 224, 0.5);
+  transform: translateY(-3px);
+}
 
-    .pulse-ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 255, 224, 0.1) 0%, transparent 80%);
-      animation: pulse 2.5s infinite;
-      z-index: -1;
-    }
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 255, 224, 0.1) 0%, transparent 80%);
+  animation: pulse 2.5s infinite;
+  z-index: -1;
+}
 
-    @keyframes pulse {
-      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
-      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.25; }
-      100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
-    }
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.25; }
+  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+}
 
-    @media (max-width: 768px) {
-      .card { padding: 40px 30px; }
-      h1 { font-size: 2.2rem; }
-      .typing-text { font-size: 1.1rem; }
-      .glow-btn { font-size: 1rem; padding: 14px 36px; }
-    }
+@media (max-width: 768px) {
+  .card { padding: 40px 30px; }
+  h1 { font-size: 2.2rem; }
+  .typing-text { font-size: 1.1rem; }
+  .glow-btn, .glow-btn-link { font-size: 1rem; padding: 14px 36px; }
+}
+
   </style>
 </head>
 
@@ -192,7 +200,7 @@
     <h1 title="This site is very cool."><span id="rocket">🚀</span> Launch Portal</h1>
     <p class="typing-text" id="typedText">Loading text...</p>
     <button class="glow-btn" onclick="openEmbedded('https://code-andrewy.github.io/jumpman64beta/')">Jumpman64</button>
-    <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Open Example</a>
+    <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Bug fixer</a>
   </div>
 
   <script>
