@@ -36,6 +36,7 @@
       background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
       color: #fff;
       position: relative;
+      overflow: hidden;
     }
 
     body::before {
@@ -184,6 +185,31 @@
       100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
     }
 
+    /* Halloween Emoji Background */
+    #emoji-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      user-select: none;
+      animation: floatEmoji linear infinite;
+    }
+
+    @keyframes floatEmoji {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(50px, 50px) rotate(180deg); }
+      100% { transform: translate(0, 0) rotate(360deg); }
+    }
+
     @media (max-width: 768px) {
       .card { padding: 40px 30px; }
       h1 { font-size: 2.2rem; }
@@ -194,6 +220,8 @@
 </head>
 
 <body>
+  <div id="emoji-background"></div>
+
   <div class="card">
     <div class="pulse-ring"></div>
     <h1 title="This site is very cool."><span id="rocket">🚀</span> Launch Portal</h1>
@@ -202,7 +230,6 @@
     <!-- Buttons -->
     <button class="glow-btn" onclick="openEmbedded('https://code-andrewy.github.io/jumpman64beta/')">Jumpman64</button>
     <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Bug fixer</a>
-    <button class="glow-btn" onclick="openBlankFetch()">Jumpman64 (🐺)</button>
   </div>
 
   <script>
@@ -304,18 +331,16 @@
       setTimeout(() => rocket.classList.remove("launching"), 1300);
     });
 
-    // Easter Egg 1: Glow button click count
+    // Glow button easter egg
     let clickCount = 0;
     document.querySelectorAll(".glow-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         clickCount++;
-        if (clickCount === 10) {
-          alert("You really love clicking, huh?");
-        }
+        if (clickCount === 10) alert("You really love clicking, huh?");
       });
     });
 
-    // Easter Egg 3: 'A' key = Andrew mode
+    // 'A' key easter egg
     document.addEventListener("keydown", (e) => {
       if (e.key.toLowerCase() === "a") {
         alert("A mode!");
@@ -324,12 +349,31 @@
       }
     });
 
-    // Easter Egg 4: Glitchy text every 30s
+    // Glitchy text every 30s
     setInterval(() => {
       const original = typedText.innerHTML;
       typedText.innerHTML = "SYSTEM MALFUNCTION...just kidding.";
       setTimeout(() => typedText.innerHTML = original, 1000);
     }, 30000);
+
+    // Halloween emojis
+    const emojis = ["🎃","👻","🍬","🦇","💀"];
+    const emojiContainer = document.createElement("div");
+    emojiContainer.id = "emoji-background";
+    document.body.appendChild(emojiContainer);
+    const numberOfEmojis = 20;
+
+    for (let i = 0; i < numberOfEmojis; i++) {
+      const emojiEl = document.createElement("div");
+      emojiEl.classList.add("emoji");
+      emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      emojiEl.style.left = Math.random() * 100 + "vw";
+      emojiEl.style.top = Math.random() * 100 + "vh";
+      const duration = Math.random() * 8 + 4;
+      emojiEl.style.animationDuration = duration + "s";
+      emojiEl.style.fontSize = (Math.random() * 24 + 16) + "px";
+      emojiContainer.appendChild(emojiEl);
+    }
   </script>
 </body>
 
