@@ -2,379 +2,437 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Launch Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --primary: #0f0c29;
-      --secondary: #302b63;
-      --tertiary: #24243e;
-      --glow: #00ffe0;
-      --text-muted: #cfcfcf;
-      --btn-hover-glow: rgba(0, 255, 224, 0.3);
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Launch Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/code-andrewy/Games1232/refs/heads/main/image-removebg-preview%20(32).png" />
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <style>
+        :root {
+            --primary: #0f0c29;
+            --secondary: #302b63;
+            --tertiary: #24243e;
+            --glow: #00ffe0;
+            --text-muted: #cfcfcf;
+            --btn-hover-glow: rgba(0, 255, 224, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --banner-bg: rgba(255, 255, 255, 0.05);
+            --shadow-color: rgba(0, 255, 224, 0.3);
+        }
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      overflow: auto;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      font-family: "Outfit", sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-    }
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at 20% 20%, #1b2735 0%, #090a0f 100%);
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
 
-    body::before {
-      content: "";
-      position: absolute;
-      top: -20%;
-      left: -20%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(from 0deg, #00ffe0, #7f00ff, #00ffe0);
-      animation: spin 25s linear infinite;
-      opacity: 0.08;
-      z-index: 0;
-    }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3vh;
+            padding: 3vh 2vw;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            z-index: 1;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+        .banner {
+            background: var(--banner-bg);
+            border: 0.15vw solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            padding: 1.5vh 5vw;
+            border-radius: 2.5vw;
+            font-weight: 600;
+            text-align: center;
+            color: var(--glow);
+            box-shadow: 0 0 2vh var(--shadow-color);
+            letter-spacing: 0.08vw;
+            max-width: 90%;
+            animation: pulseBanner 3s infinite ease-in-out;
+            will-change: box-shadow;
+        }
 
-    .card {
-      position: relative;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 36px;
-      backdrop-filter: blur(30px);
-      padding: 60px 40px;
-      text-align: center;
-      max-width: 720px;
-      width: 90%;
-      z-index: 1;
-      box-shadow: 0 0 60px rgba(0, 255, 224, 0.15), 0 0 15px rgba(0, 255, 224, 0.06) inset;
-      transition: all 0.3s ease-in-out;
-      animation: float 6s ease-in-out infinite;
-    }
+        @keyframes pulseBanner {
+            0% {
+                box-shadow: 0 0 1.5vh rgba(0, 255, 224, 0.25);
+            }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+            50% {
+                box-shadow: 0 0 3vh rgba(0, 255, 224, 0.35);
+            }
 
-    .card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 80px rgba(0, 255, 224, 0.25), 0 0 20px rgba(0, 255, 224, 0.1) inset;
-    }
+            100% {
+                box-shadow: 0 0 1.5vh rgba(0, 255, 224, 0.25);
+            }
+        }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 16px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: #fff;
-    }
+        .card {
+            position: relative;
+            background: var(--card-bg);
+            border: 0.15vw solid rgba(255, 255, 255, 0.12);
+            border-radius: 2vw;
+            backdrop-filter: blur(10px);
+            padding: 5vh 3vw;
+            text-align: center;
+            width: 90%;
+            max-width: 720px;
+            box-shadow: 0 0 3vh rgba(0, 255, 224, 0.12);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.5vh;
+            will-change: transform, box-shadow;
+        }
 
-    #rocket {
-      display: inline-block;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      will-change: transform;
-    }
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 5vh rgba(0, 255, 224, 0.25);
+        }
 
-    #rocket.launching {
-      animation: blastoff 1.2s forwards;
-    }
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            margin-bottom: 2vh;
+            font-weight: 700;
+            letter-spacing: 0.4vw;
+            color: #fff;
+            text-shadow: 0 0 0.3vh rgba(0, 255, 224, 0.3);
+        }
 
-    @keyframes blastoff {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { transform: translateY(-150px) scale(1.2); }
-      100% { transform: translateY(-300px) scale(0.5); opacity: 0; }
-    }
+        .typing-text {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--text-muted);
+            margin-bottom: 4vh;
+            line-height: 1.6;
+            font-weight: 400;
+            min-height: 2.5em;
+        }
 
-    .typing-text {
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      margin-bottom: 32px;
-      line-height: 1.6;
-      font-weight: 400;
-      min-height: 2.5em;
-    }
+        .countdown {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--glow);
+            font-weight: 600;
+            margin-bottom: 2vh;
+            text-shadow: 0 0 0.5vh rgba(0, 255, 224, 0.3);
+        }
 
-    .glow-btn,
-    .glow-btn-link {
-      position: relative;
-      border: 2px solid var(--glow);
-      background: rgba(0, 255, 224, 0.05);
-      border-radius: 50px;
-      padding: 16px 48px;
-      color: var(--glow);
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(0, 255, 224, 0.3);
-      transform: translateY(0);
-      margin: 14px auto;
-      display: block;
-      text-align: center;
-      width: fit-content;
-      min-width: 220px;
-      text-decoration: none;
-    }
+        .glow-btn {
+            position: relative;
+            border: 0.15vw solid var(--glow);
+            background: rgba(0, 255, 224, 0.06);
+            border-radius: 50px;
+            padding: 1.5vh 3vw;
+            color: var(--glow);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0.8vh rgba(0, 255, 224, 0.3);
+            width: min(80%, 300px);
+            will-change: transform, box-shadow;
+        }
 
-    .glow-btn::before,
-    .glow-btn-link::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 180%;
-      height: 200%;
-      background: linear-gradient(90deg, #00ffe0, #00bfff, #00ffe0);
-      transform: translate(-50%, -50%) rotate(30deg);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
+        .glow-btn::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 180%;
+            height: 200%;
+            background: linear-gradient(90deg, #00ffe0, #00bfff, #00ffe0);
+            transform: translate(-50%, -50%) rotate(30deg);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
 
-    .glow-btn:hover::before,
-    .glow-btn-link:hover::before {
-      opacity: 0.1;
-    }
+        .glow-btn:hover::before {
+            opacity: 0.15;
+        }
 
-    .glow-btn:hover,
-    .glow-btn-link:hover {
-      background-color: rgba(0, 255, 224, 0.08);
-      box-shadow: 0 0 30px rgba(0, 255, 224, 0.5);
-      transform: translateY(-3px);
-    }
+        .glow-btn:hover {
+            background-color: rgba(0, 255, 224, 0.1);
+            box-shadow: 0 0 2.5vh rgba(0, 255, 224, 0.45);
+            transform: translateY(-0.2vh) scale(1.02);
+        }
 
-    .pulse-ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 255, 224, 0.1) 0%, transparent 80%);
-      animation: pulse 2.5s infinite;
-      z-index: -1;
-    }
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15vw;
+            height: 15vw;
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 224, 0.15)0%, transparent 80%);
+            animation: pulse 2.5s infinite ease-in-out;
+            z-index: -1;
+            will-change: transform, opacity;
+        }
 
-    @keyframes pulse {
-      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
-      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.25; }
-      100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
-    }
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0.4;
+            }
 
-    /* Halloween Emoji Background */
-    #emoji-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.25;
+            }
 
-    .emoji {
-      position: absolute;
-      font-size: 2rem;
-      user-select: none;
-      animation: floatEmoji linear infinite;
-    }
+            100% {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0.4;
+            }
+        }
 
-    @keyframes floatEmoji {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(50px, 50px) rotate(180deg); }
-      100% { transform: translate(0, 0) rotate(360deg); }
-    }
+        #emoji-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    @media (max-width: 768px) {
-      .card { padding: 40px 30px; }
-      h1 { font-size: 2.2rem; }
-      .typing-text { font-size: 1.1rem; }
-      .glow-btn, .glow-btn-link { font-size: 1rem; padding: 14px 36px; }
-    }
-  </style>
+        .emoji {
+            position: absolute;
+            font-size: clamp(1rem, 2.5vw, 2rem);
+            user-select: none;
+            animation: float linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(2vw, 2vh);
+            }
+
+            50% {
+                transform: translate(0, 4vh);
+            }
+
+            75% {
+                transform: translate(-2vw, 2vh);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        #pauseBtn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            background: rgba(0, 255, 224, 0.1);
+            border: 1px solid var(--glow);
+            color: var(--glow);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        #pauseBtn:hover {
+            background: rgba(0, 255, 224, 0.2);
+            transform: scale(1.05);
+        }
+
+        @media(max-width:768px) {
+            .card {
+                padding: 4vh 3vw;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                letter-spacing: 0.2vw;
+            }
+
+            .typing-text {
+                font-size: 1.1rem;
+            }
+
+            .glow-btn {
+                font-size: 1rem;
+                padding: 1.2vh 3vw;
+            }
+
+            .banner {
+                padding: 1vh 2vw;
+                font-size: 0.95rem;
+            }
+
+            .pulse-ring {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <div id="emoji-background"></div>
+    <div id="emoji-background"></div>
+    <button id="pauseBtn">⏸️ Pause Animations</button>
 
-  <div class="card">
-    <div class="pulse-ring"></div>
-    <h1 title="This site is very cool."><span id="rocket">🚀</span> Launch Portal</h1>
-    <p class="typing-text" id="typedText">Loading text...</p>
-    
-    <!-- Buttons -->
-    <button class="glow-btn" onclick="openEmbedded('https://code-andrewy.github.io/jumpman64beta/')">Jumpman64</button>
-    <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Bug fixer</a>
-  </div>
+    <div class="container visible" id="main-content">
+        <div class="banner">Do people even look up here?! (v1.5.1)</div>
+        <div class="card">
+            <div class="pulse-ring"></div>
+            <h1>🚀 Launch Portal</h1>
+            <p class="typing-text" id="typedText">Loading text...</p>
+            <p class="countdown" id="countdown"></p>
+            <!-- Your custom buttons -->
+            <button class="glow-btn" onclick="openEmbedded('https://code-andrewy.github.io/jumpman64beta/')">Jumpman64</button>
+            <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Bug fixer</a>
+        </div>
+    </div>
 
-  <script>
-    let messages = [];
+    <script>
+        // Typing effect
+        let messages = [];
+        const typedText = document.getElementById("typedText");
+        const typingSpeed = 35;
+        const pauseDuration = 2000;
 
-    const typedText = document.getElementById("typedText");
-    const typingSpeed = 35;
-    const pauseDuration = 2000;
+        fetch("https://raw.githubusercontent.com/code-andrewy/cooltext/refs/heads/main/text")
+            .then(r => r.text())
+            .then(data => {
+                messages = data.split("\n").filter(l => l.trim() !== "");
+                startTypingLoop();
+            })
+            .catch(e => {
+                messages = ["Failed to load messages."];
+                startTypingLoop();
+            });
 
-    fetch("https://raw.githubusercontent.com/code-andrewy/cooltext/refs/heads/main/text")
-      .then((response) => response.text())
-      .then((data) => {
-        messages = data.split("\n").filter((line) => line.trim() !== "");
-        startTypingLoop();
-      })
-      .catch((error) => {
-        console.error("Failed to load:", error);
-        messages = ["Failed to load messages. Check your connection or file URL."];
-        startTypingLoop();
-      });
+        function getRandomMessage() {
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
 
-    function getRandomMessage() {
-      return messages[Math.floor(Math.random() * messages.length)];
-    }
+        function typeMessage(msg, i = 0) {
+            if (i < msg.length) {
+                typedText.innerHTML += msg.charAt(i);
+                setTimeout(() => typeMessage(msg, i + 1), typingSpeed);
+            } else {
+                setTimeout(() => eraseMessage(msg.length), pauseDuration);
+            }
+        }
 
-    function typeMessage(message, idx = 0) {
-      if (idx < message.length) {
-        typedText.innerHTML += message.charAt(idx);
-        setTimeout(() => typeMessage(message, idx + 1), typingSpeed);
-      } else {
-        setTimeout(() => eraseMessage(message.length), pauseDuration);
-      }
-    }
+        function eraseMessage(len) {
+            if (len > 0) {
+                typedText.innerHTML = typedText.innerHTML.slice(0, -1);
+                setTimeout(() => eraseMessage(len - 1), typingSpeed / 1.5);
+            } else {
+                setTimeout(startTypingLoop, 500);
+            }
+        }
 
-    function eraseMessage(length) {
-      if (length > 0) {
-        typedText.innerHTML = typedText.innerHTML.slice(0, -1);
-        setTimeout(() => eraseMessage(length - 1), typingSpeed / 1.5);
-      } else {
-        setTimeout(startTypingLoop, 500);
-      }
-    }
+        function startTypingLoop() {
+            const msg = getRandomMessage();
+            typedText.innerHTML = "";
+            typeMessage(msg);
+        }
 
-    function startTypingLoop() {
-      const message = getRandomMessage();
-      typedText.innerHTML = "";
-      typeMessage(message);
-    }
+        // Countdown
+        const countdownEl = document.getElementById("countdown");
+        const launchDate = new Date("2025-11-05T12:00:00");
 
-    function openEmbedded(url) {
-      const newWin = window.open("", "_blank");
-      if (newWin) {
-        const iframeHTML = `
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <title>Home</title>
-              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-              <style>
-                html, body { margin: 0; padding: 0; height: 100%; background-color: #0e0e0e; }
-                iframe { width: 100%; height: 100%; border: none; }
-              </style>
-            </head>
-            <body>
-              <iframe src="${url}"></iframe>
-            </body>
-          </html>`;
-        newWin.document.open();
-        newWin.document.write(iframeHTML);
-        newWin.document.close();
-      } else {
-        alert("Popup blocked. Please allow popups for this site.");
-      }
-    }
+        function updateCountdown() {
+            const now = new Date();
+            const diff = launchDate - now;
+            if (diff <= 0) {
+                countdownEl.textContent = "🚀 The new update has Launched!";
+                clearInterval(countdownInterval);
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+            countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s until update`;
+        }
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
 
-    function openBlankFetch() {
-      fetch("https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/index.html")
-        .then(response => response.text())
-        .then(htmlContent => {
-          const newWin = window.open("about:blank", "_blank");
-          if (newWin) {
-            newWin.document.open();
-            newWin.document.write(htmlContent);
-            newWin.document.close();
-          } else {
-            alert("Popup blocked. Please allow popups for this site.");
-          }
-        })
-        .catch(error => {
-          console.error("Failed to fetch raw HTML:", error);
-          alert("Error loading raw page.");
+        // Buttons
+        function openEmbedded(url) {
+            const newWin = window.open("", "_blank");
+            if (newWin) {
+                const iframeHTML = `<!DOCTYPE html><html><head><title>Home</title><style>html,body{margin:0;padding:0;height:100%;background:#0e0e0e}iframe{width:100%;height:100%;border:none;}</style></head><body><iframe src="${url}"></iframe></body></html>`;
+                newWin.document.open();
+                newWin.document.write(iframeHTML);
+                newWin.document.close();
+            } else {
+                alert("Popup blocked.");
+            }
+        }
+
+        // Rocket click animation
+        document.querySelector("h1").addEventListener("click", () => {
+            const h1 = document.querySelector("h1");
+            h1.classList.add("launching");
+            setTimeout(() => h1.classList.remove("launching"), 1300);
         });
-    }
 
-    // Rocket blast-off animation
-    document.getElementById("rocket").addEventListener("click", () => {
-      const rocket = document.getElementById("rocket");
-      rocket.classList.add("launching");
-      setTimeout(() => rocket.classList.remove("launching"), 1300);
-    });
+        // Emoji background
+        const emojis = ["🎃", "👻", "🍬", "🦇", "💀"];
+        const emojiContainer = document.getElementById("emoji-background");
+        const numberOfEmojis = 20;
+        for (let i = 0; i < numberOfEmojis; i++) {
+            const emojiEl = document.createElement("div");
+            emojiEl.classList.add("emoji");
+            emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            emojiEl.style.left = Math.random() * 100 + "vw";
+            emojiEl.style.top = Math.random() * 100 + "vh";
+            emojiEl.style.animationDuration = (Math.random() * 8 + 4) + "s";
+            emojiEl.style.fontSize = (Math.random() * 24 + 16) + "px";
+            emojiContainer.appendChild(emojiEl);
+        }
 
-    // Glow button easter egg
-    let clickCount = 0;
-    document.querySelectorAll(".glow-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        clickCount++;
-        if (clickCount === 10) alert("You really love clicking, huh?");
-      });
-    });
+        // Pause animations
+        const pauseBtn = document.getElementById("pauseBtn");
 
-    // 'A' key easter egg
-    document.addEventListener("keydown", (e) => {
-      if (e.key.toLowerCase() === "a") {
-        alert("A mode!");
-        const beep = new Audio("https://freesound.org/data/previews/66/66717_931655-lq.mp3");
-        beep.play().catch(() => {});
-      }
-    });
-
-    // Glitchy text every 30s
-    setInterval(() => {
-      const original = typedText.innerHTML;
-      typedText.innerHTML = "SYSTEM MALFUNCTION...just kidding.";
-      setTimeout(() => typedText.innerHTML = original, 1000);
-    }, 30000);
-
-    // Halloween emojis
-    const emojis = ["🎃","👻","🍬","🦇","💀"];
-    const emojiContainer = document.createElement("div");
-    emojiContainer.id = "emoji-background";
-    document.body.appendChild(emojiContainer);
-    const numberOfEmojis = 20;
-
-    for (let i = 0; i < numberOfEmojis; i++) {
-      const emojiEl = document.createElement("div");
-      emojiEl.classList.add("emoji");
-      emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-      emojiEl.style.left = Math.random() * 100 + "vw";
-      emojiEl.style.top = Math.random() * 100 + "vh";
-      const duration = Math.random() * 8 + 4;
-      emojiEl.style.animationDuration = duration + "s";
-      emojiEl.style.fontSize = (Math.random() * 24 + 16) + "px";
-      emojiContainer.appendChild(emojiEl);
-    }
-  </script>
+        function toggleAnimations(pause) {
+            document.querySelectorAll('.emoji,.pulse-ring,.banner,.card,.glow-btn').forEach(el => el.style.animationPlayState = pause ? 'paused' : 'running');
+            pauseBtn.textContent = pause ? '▶️ Resume Animations' : '⏸️ Pause Animations';
+            document.cookie = `animationsPaused=${pause?'1':'0'};path=/`;
+        }
+        toggleAnimations(document.cookie.includes('animationsPaused=1'));
+        pauseBtn.addEventListener('click', () => {
+            toggleAnimations(pauseBtn.textContent.includes('Pause'));
+        });
+    </script>
 </body>
 
 </html>
