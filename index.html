@@ -306,7 +306,7 @@
     <button id="pauseBtn">⏸️ Pause Animations</button>
 
     <div class="container visible" id="main-content">
-        <div class="banner">Do people even look up here?! (v1.5.1)</div>
+        <div class="banner">Happy halloween🦇🎃👻 (v1.6)</div>
         <div class="card">
             <div class="pulse-ring"></div>
             <h1>🚀 Launch Portal</h1>
@@ -319,119 +319,156 @@
     </div>
 
     <script>
-        // Typing effect
-        let messages = [];
-        const typedText = document.getElementById("typedText");
-        const typingSpeed = 35;
-        const pauseDuration = 2000;
+    // ---------------------------
+    // Typing effect
+    // ---------------------------
+    let messages = [];
+    const typedText = document.getElementById("typedText");
+    const typingSpeed = 35;
+    const pauseDuration = 2000;
 
-        fetch("https://raw.githubusercontent.com/code-andrewy/cooltext/refs/heads/main/text")
-            .then(r => r.text())
-            .then(data => {
-                messages = data.split("\n").filter(l => l.trim() !== "");
-                startTypingLoop();
-            })
-            .catch(e => {
-                messages = ["Failed to load messages."];
-                startTypingLoop();
-            });
-
-        function getRandomMessage() {
-            return messages[Math.floor(Math.random() * messages.length)];
-        }
-
-        function typeMessage(msg, i = 0) {
-            if (i < msg.length) {
-                typedText.innerHTML += msg.charAt(i);
-                setTimeout(() => typeMessage(msg, i + 1), typingSpeed);
-            } else {
-                setTimeout(() => eraseMessage(msg.length), pauseDuration);
-            }
-        }
-
-        function eraseMessage(len) {
-            if (len > 0) {
-                typedText.innerHTML = typedText.innerHTML.slice(0, -1);
-                setTimeout(() => eraseMessage(len - 1), typingSpeed / 1.5);
-            } else {
-                setTimeout(startTypingLoop, 500);
-            }
-        }
-
-        function startTypingLoop() {
-            const msg = getRandomMessage();
-            typedText.innerHTML = "";
-            typeMessage(msg);
-        }
-
-        // Countdown
-        const countdownEl = document.getElementById("countdown");
-        const launchDate = new Date("2025-11-05T12:00:00");
-
-        function updateCountdown() {
-            const now = new Date();
-            const diff = launchDate - now;
-            if (diff <= 0) {
-                countdownEl.textContent = "🚀 The new update has Launched!";
-                clearInterval(countdownInterval);
-                return;
-            }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
-            countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s until update`;
-        }
-        updateCountdown();
-        const countdownInterval = setInterval(updateCountdown, 1000);
-
-        // Buttons
-        function openEmbedded(url) {
-            const newWin = window.open("", "_blank");
-            if (newWin) {
-                const iframeHTML = `<!DOCTYPE html><html><head><title>Home</title><style>html,body{margin:0;padding:0;height:100%;background:#0e0e0e}iframe{width:100%;height:100%;border:none;}</style></head><body><iframe src="${url}"></iframe></body></html>`;
-                newWin.document.open();
-                newWin.document.write(iframeHTML);
-                newWin.document.close();
-            } else {
-                alert("Popup blocked.");
-            }
-        }
-
-        // Rocket click animation
-        document.querySelector("h1").addEventListener("click", () => {
-            const h1 = document.querySelector("h1");
-            h1.classList.add("launching");
-            setTimeout(() => h1.classList.remove("launching"), 1300);
+    fetch("https://raw.githubusercontent.com/code-andrewy/cooltext/refs/heads/main/text")
+        .then(r => r.text())
+        .then(data => {
+            messages = data.split("\n").filter(l => l.trim() !== "");
+            startTypingLoop();
+        })
+        .catch(e => {
+            messages = ["Failed to load messages."];
+            startTypingLoop();
         });
 
-        // Emoji background
-        const emojis = ["🎃", "👻", "🍬", "🦇", "💀"];
-        const emojiContainer = document.getElementById("emoji-background");
-        const numberOfEmojis = 20;
-        for (let i = 0; i < numberOfEmojis; i++) {
-            const emojiEl = document.createElement("div");
-            emojiEl.classList.add("emoji");
-            emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            emojiEl.style.left = Math.random() * 100 + "vw";
-            emojiEl.style.top = Math.random() * 100 + "vh";
-            emojiEl.style.animationDuration = (Math.random() * 8 + 4) + "s";
-            emojiEl.style.fontSize = (Math.random() * 24 + 16) + "px";
-            emojiContainer.appendChild(emojiEl);
+    function getRandomMessage() {
+        return messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function typeMessage(msg, i = 0) {
+        if (i < msg.length) {
+            typedText.innerHTML += msg.charAt(i);
+            setTimeout(() => typeMessage(msg, i + 1), typingSpeed);
+        } else {
+            setTimeout(() => eraseMessage(msg.length), pauseDuration);
+        }
+    }
+
+    function eraseMessage(len) {
+        if (len > 0) {
+            typedText.innerHTML = typedText.innerHTML.slice(0, -1);
+            setTimeout(() => eraseMessage(len - 1), typingSpeed / 1.5);
+        } else {
+            setTimeout(startTypingLoop, 500);
+        }
+    }
+
+    function startTypingLoop() {
+        const msg = getRandomMessage();
+        typedText.innerHTML = "";
+        typeMessage(msg);
+    }
+
+    // ---------------------------
+    // Countdown
+    // ---------------------------
+    const countdownEl = document.getElementById("countdown");
+    // Target date: Nov 24, 2025, 12:00 PM UTC
+    const launchDate = new Date(Date.UTC(2025, 10, 24, 12, 0, 0)); 
+    // Months are 0-indexed: 10 = November
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = launchDate - now;
+
+        if (diff <= 0) {
+            countdownEl.textContent = "🚀 The new update has Launched!";
+            clearInterval(countdownInterval);
+            return;
         }
 
-        // Pause animations
-        const pauseBtn = document.getElementById("pauseBtn");
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / (3600 * 24));
+        const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
 
-        function toggleAnimations(pause) {
-            document.querySelectorAll('.emoji,.pulse-ring,.banner,.card,.glow-btn').forEach(el => el.style.animationPlayState = pause ? 'paused' : 'running');
-            pauseBtn.textContent = pause ? '▶️ Resume Animations' : '⏸️ Pause Animations';
-            document.cookie = `animationsPaused=${pause?'1':'0'};path=/`;
+        countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s until update`;
+    }
+
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    // ---------------------------
+    // Open embedded buttons
+    // ---------------------------
+    function openEmbedded(url) {
+        const newWin = window.open("", "_blank");
+        if (newWin) {
+            const iframeHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Home</title>
+                    <style>
+                        html, body { margin:0; padding:0; height:100%; background:#0e0e0e; }
+                        iframe { width:100%; height:100%; border:none; }
+                    </style>
+                </head>
+                <body>
+                    <iframe src="${url}"></iframe>
+                </body>
+                </html>
+            `;
+            newWin.document.open();
+            newWin.document.write(iframeHTML);
+            newWin.document.close();
+        } else {
+            alert("Popup blocked.");
         }
-        toggleAnimations(document.cookie.includes('animationsPaused=1'));
-        pauseBtn.addEventListener('click', () => {
-            toggleAnimations(pauseBtn.textContent.includes('Pause'));
-        });
+    }
+
+    // ---------------------------
+    // Rocket click animation
+    // ---------------------------
+    document.querySelector("h1").addEventListener("click", () => {
+        const h1 = document.querySelector("h1");
+        h1.classList.add("launching");
+        setTimeout(() => h1.classList.remove("launching"), 1300);
+    });
+
+    // ---------------------------
+    // Emoji background
+    // ---------------------------
+    const emojis = ["🎃", "👻", "🍬", "🦇", "💀"];
+    const emojiContainer = document.getElementById("emoji-background");
+    const numberOfEmojis = 20;
+    for (let i = 0; i < numberOfEmojis; i++) {
+        const emojiEl = document.createElement("div");
+        emojiEl.classList.add("emoji");
+        emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emojiEl.style.left = Math.random() * 100 + "vw";
+        emojiEl.style.top = Math.random() * 100 + "vh";
+        emojiEl.style.animationDuration = (Math.random() * 8 + 4) + "s";
+        emojiEl.style.fontSize = (Math.random() * 24 + 16) + "px";
+        emojiContainer.appendChild(emojiEl);
+    }
+
+    // ---------------------------
+    // Pause/resume animations
+    // ---------------------------
+    const pauseBtn = document.getElementById("pauseBtn");
+
+    function toggleAnimations(pause) {
+        document.querySelectorAll('.emoji,.pulse-ring,.banner,.card,.glow-btn')
+            .forEach(el => el.style.animationPlayState = pause ? 'paused' : 'running');
+        pauseBtn.textContent = pause ? '▶️ Resume Animations' : '⏸️ Pause Animations';
+        document.cookie = `animationsPaused=${pause?'1':'0'};path=/`;
+    }
+
+    // Check cookie to restore paused state
+    toggleAnimations(document.cookie.includes('animationsPaused=1'));
+
+    pauseBtn.addEventListener('click', () => {
+        toggleAnimations(pauseBtn.textContent.includes('Pause'));
+    });
     </script>
 </body>
 
