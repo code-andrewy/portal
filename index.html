@@ -319,7 +319,7 @@
     </div>
 
     <script>
-   // ---------------------------
+// ---------------------------
 // Typing effect
 // ---------------------------
 let messages = [];
@@ -364,7 +364,6 @@ function eraseMessage(len) {
         typedText.innerHTML = typedText.innerHTML.slice(0, -1);
         setTimeout(() => eraseMessage(len - 1), typingSpeed / 1.5);
     } else {
-        // Fetch and type a new fact after erasing
         setTimeout(startTypingLoop, 500);
     }
 }
@@ -377,8 +376,7 @@ startTypingLoop();
 // ---------------------------
 const countdownEl = document.getElementById("countdown");
 // Target date: Nov 24, 2025, 12:00 PM UTC
-const launchDate = new Date(Date.UTC(2025, 10, 24, 12, 0, 0)); 
-// Months are 0-indexed: 10 = November
+const launchDate = new Date(Date.UTC(2025, 10, 24, 12, 0, 0));
 
 function updateCountdown() {
     const now = new Date();
@@ -479,6 +477,84 @@ toggleAnimations(document.cookie.includes('animationsPaused=1'));
 pauseBtn.addEventListener('click', () => {
     toggleAnimations(pauseBtn.textContent.includes('Pause'));
 });
+
+
+// ---------------------------
+// Version Check + Toast Popup
+// ---------------------------
+const CURRENT_VERSION = "v1.6.7"; // local version
+const VERSION_URL = "https://raw.githubusercontent.com/code-andrewy/Games1232/main/version.json"; // remote version file
+
+async function checkVersion() {
+    try {
+        const res = await fetch(VERSION_URL + "?t=" + Date.now()); // avoid caching
+        const data = await res.json();
+        const latest = data.latest;
+
+        if (latest && latest !== CURRENT_VERSION) {
+            showVersionToast(latest);
+        }
+    } catch (err) {
+        console.error("Version check failed:", err);
+    }
+}
+
+function showVersionToast(latest) {
+    const toast = document.createElement("div");
+    toast.id = "version-toast";
+    toast.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 0, 80, 0.95);
+            color: white;
+            padding: 1rem 2rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 0 20px rgba(255,0,80,0.6);
+            z-index: 9999;
+            text-align: center;
+            animation: slideDown 0.6s ease;
+        ">
+            ⚠️ You’re using an outdated version (${CURRENT_VERSION}).<br>
+            The latest is <b>${latest}</b>.<br><br>
+            <button id="refreshBtn" style="
+                background: white;
+                color: #ff0050;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                font-weight: 700;
+                cursor: pointer;
+                transition: background 0.3s;
+            ">🔄 Refresh</button>
+        </div>
+    `;
+
+    const style = document.createElement("style");
+    style.textContent = `
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        #refreshBtn:hover {
+            background: #ffe5ed;
+        }
+    `;
+    document.head.appendChild(style);
+
+    document.body.appendChild(toast);
+
+    document.getElementById("refreshBtn").addEventListener("click", () => {
+        location.reload();
+    });
+}
+
+checkVersion();
     </script>
 </body>
 
