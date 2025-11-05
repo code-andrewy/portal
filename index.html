@@ -37,7 +37,6 @@
       align-items: center;
     }
 
-    /* Layout */
     .container {
       width: 100%;
       height: 100%;
@@ -52,7 +51,6 @@
       z-index: 1;
     }
 
-    /* Top banner */
     .banner {
       background: var(--banner-bg);
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -77,7 +75,6 @@
       }
     }
 
-    /* Card */
     .card {
       background: var(--card-bg);
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -129,7 +126,6 @@
       transform: scale(1.05);
     }
 
-    /* Pause Button */
     #pauseBtn {
       position: fixed;
       top: 1rem;
@@ -150,7 +146,6 @@
       transform: scale(1.05);
     }
 
-    /* Version Toast */
     #version-toast {
       position: fixed;
       top: 6vh;
@@ -203,7 +198,6 @@
       }
     }
 
-    /* Emoji Background */
     #emoji-background {
       position: absolute;
       inset: 0;
@@ -220,46 +214,26 @@
     }
 
     @keyframes floatRandom {
-      0% {
-        transform: translate(0, 0);
-      }
-
-      25% {
-        transform: translate(5vw, 3vh);
-      }
-
-      50% {
-        transform: translate(-4vw, 5vh);
-      }
-
-      75% {
-        transform: translate(3vw, -3vh);
-      }
-
-      100% {
-        transform: translate(0, 0);
-      }
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(5vw, 3vh); }
+      50% { transform: translate(-4vw, 5vh); }
+      75% { transform: translate(3vw, -3vh); }
+      100% { transform: translate(0, 0); }
     }
 
     @media (max-width: 600px) {
-      .card {
-        padding: 2rem 1.5rem;
-      }
-
-      .banner {
-        font-size: 0.9rem;
-        padding: 0.8rem 1.5rem;
-      }
+      .card { padding: 2rem 1.5rem; }
+      .banner { font-size: 0.9rem; padding: 0.8rem 1.5rem; }
     }
   </style>
 </head>
 
 <body>
-  <button id="pauseBtn">⏸ Pause emoijs</button>
+  <button id="pauseBtn">⏸ Pause emojis</button>
   <div id="emoji-background"></div>
 
   <div class="container">
-    <div class="banner"> Launch Portal v2.2</div>
+    <div class="banner">Launch Portal v2.2</div>
 
     <div class="card">
       <h1>🚀Portal</h1>
@@ -270,15 +244,19 @@
   </div>
 
   <div id="version-toast">
-    <div class="toast-inner">
-      ⚡ <b>Update Available!</b><br>
-      You’re using <b>v1.6.7</b> — latest is <b style="color:#00ffe0;">v2.2</b><br><br>
-      <button id="refreshBtn">🔄 Refresh and update</button>
-    </div>
+    <div class="toast-inner"></div>
   </div>
 
   <script>
-    // Typewriter - Useless Facts
+    // Version
+    const currentVersion = "v2.2";
+    const latestVersion = "v2.2"; // Change to simulate update
+
+    // Banner and title
+    document.title = `Portal ${currentVersion}`;
+    document.querySelector(".banner").textContent = `Launch Portal ${currentVersion}`;
+
+    // Typewriter
     const typewriter = document.getElementById("typewriter");
     const typingSpeed = 35, pauseDuration = 5000;
 
@@ -308,11 +286,10 @@
     }
     startTyping();
 
-    // Emoji background - optimized
+    // Emoji background
     const emojis = ["🎮", "🚀", "💫", "👾", "🕹️"];
     const bg = document.getElementById("emoji-background");
-    const emojiCount = 10;
-    for (let i = 0; i < emojiCount; i++) {
+    for (let i = 0; i < 10; i++) {
       const e = document.createElement("div");
       e.className = "emoji";
       e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -327,11 +304,11 @@
     const pauseBtn = document.getElementById("pauseBtn");
     pauseBtn.addEventListener("click", () => {
       const paused = document.body.classList.toggle("paused");
-      pauseBtn.textContent = paused ? "▶️ Resume emojis" : "⏸ Pause emoijs";
+      pauseBtn.textContent = paused ? "▶️ Resume emojis" : "⏸ Pause emojis";
       document.querySelectorAll(".emoji").forEach(e => e.style.animationPlayState = paused ? "paused" : "running");
     });
 
-    // Launch Jumpman64 embedded
+    // Launch Jumpman64
     const launchBtn = document.getElementById("launchBtn");
     launchBtn.addEventListener("click", () => {
       const newWin = window.open("", "_blank");
@@ -354,10 +331,18 @@
       }
     });
 
-    // Version toast (example)
-    const versionToast = document.getElementById("version-toast");
-    versionToast.style.display = "block";
-    document.getElementById("refreshBtn").addEventListener("click", () => location.reload());
+    // Version toast
+    if (currentVersion !== latestVersion) {
+      const toast = document.getElementById("version-toast");
+      const toastInner = toast.querySelector(".toast-inner");
+      toastInner.innerHTML = `
+        ⚡ <b>Update Available!</b><br>
+        You’re using <b>${currentVersion}</b> — latest is <b style="color:#00ffe0;">${latestVersion}</b><br><br>
+        <button id="refreshBtn">🔄 Refresh and update</button>
+      `;
+      toast.style.display = "block";
+      document.getElementById("refreshBtn").addEventListener("click", () => location.reload());
+    }
   </script>
 </body>
 
