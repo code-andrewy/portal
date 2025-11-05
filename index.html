@@ -2,560 +2,363 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Launch Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/code-andrewy/Games1232/refs/heads/main/image-removebg-preview%20(32).png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal v2.2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png"
+    href="https://raw.githubusercontent.com/code-andrewy/Games1232/refs/heads/main/image-removebg-preview%20(32).png" />
 
-    <style>
-        :root {
-            --primary: #0f0c29;
-            --secondary: #302b63;
-            --tertiary: #24243e;
-            --glow: #00ffe0;
-            --text-muted: #cfcfcf;
-            --btn-hover-glow: rgba(0, 255, 224, 0.3);
-            --card-bg: rgba(255, 255, 255, 0.07);
-            --banner-bg: rgba(255, 255, 255, 0.05);
-            --shadow-color: rgba(0, 255, 224, 0.3);
-        }
+  <style>
+    :root {
+      --glow: #00ffe0;
+      --text-muted: #cfcfcf;
+      --card-bg: rgba(255, 255, 255, 0.07);
+      --banner-bg: rgba(255, 255, 255, 0.05);
+      --shadow-color: rgba(0, 255, 224, 0.3);
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-            font-family: 'Outfit', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle at 20% 20%, #1b2735 0%, #090a0f 100%);
-            color: #fff;
-            overflow: hidden;
-            position: relative;
-        }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at 20% 20%, #1b2735 0%, #090a0f 100%);
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 3vh;
-            padding: 3vh 2vw;
-            width: 100%;
-            height: 100%;
-            max-width: 100%;
-            z-index: 1;
-            opacity: 1;
-            transition: opacity 0.8s ease;
-        }
+    /* Layout */
+    .container {
+      width: 100%;
+      height: 100%;
+      padding: 3vh 3vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2vh;
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
 
-        .banner {
-            background: var(--banner-bg);
-            border: 0.15vw solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            padding: 1.5vh 5vw;
-            border-radius: 2.5vw;
-            font-weight: 600;
-            text-align: center;
-            color: var(--glow);
-            box-shadow: 0 0 2vh var(--shadow-color);
-            letter-spacing: 0.08vw;
-            max-width: 90%;
-            animation: pulseBanner 3s infinite ease-in-out;
-            will-change: box-shadow;
-        }
+    /* Top banner */
+    .banner {
+      background: var(--banner-bg);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 2vw;
+      padding: 1rem 2.5rem;
+      color: var(--glow);
+      font-weight: 600;
+      font-size: 1rem;
+      text-shadow: 0 0 10px rgba(0, 255, 224, 0.3);
+      box-shadow: 0 0 15px var(--shadow-color);
+      animation: pulse 3s infinite ease-in-out;
+    }
 
-        @keyframes pulseBanner {
-            0% {
-                box-shadow: 0 0 1.5vh rgba(0, 255, 224, 0.25);
-            }
+    @keyframes pulse {
+      0%,
+      100% {
+        box-shadow: 0 0 10px rgba(0, 255, 224, 0.3);
+      }
 
-            50% {
-                box-shadow: 0 0 3vh rgba(0, 255, 224, 0.35);
-            }
+      50% {
+        box-shadow: 0 0 25px rgba(0, 255, 224, 0.5);
+      }
+    }
 
-            100% {
-                box-shadow: 0 0 1.5vh rgba(0, 255, 224, 0.25);
-            }
-        }
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 1.5vw;
+      padding: 3vh 4vw;
+      backdrop-filter: blur(10px);
+      max-width: 650px;
+      width: 90%;
+      box-shadow: 0 0 25px rgba(0, 255, 224, 0.15);
+      transition: all 0.3s;
+    }
 
-        .card {
-            position: relative;
-            background: var(--card-bg);
-            border: 0.15vw solid rgba(255, 255, 255, 0.12);
-            border-radius: 2vw;
-            backdrop-filter: blur(10px);
-            padding: 5vh 3vw;
-            text-align: center;
-            width: 90%;
-            max-width: 720px;
-            box-shadow: 0 0 3vh rgba(0, 255, 224, 0.12);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2.5vh;
-            will-change: transform, box-shadow;
-        }
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 35px rgba(0, 255, 224, 0.3);
+    }
 
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 5vh rgba(0, 255, 224, 0.25);
-        }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      margin-bottom: 0.6rem;
+    }
 
-        h1 {
-            font-size: clamp(1.8rem, 4vw, 3rem);
-            margin-bottom: 2vh;
-            font-weight: 700;
-            letter-spacing: 0.4vw;
-            color: #fff;
-            text-shadow: 0 0 0.3vh rgba(0, 255, 224, 0.3);
-        }
+    .typing-text {
+      color: var(--text-muted);
+      min-height: 2.2em;
+      font-size: 1.05rem;
+      margin: 1rem 0;
+    }
 
-        .typing-text {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: var(--text-muted);
-            margin-bottom: 4vh;
-            line-height: 1.6;
-            font-weight: 400;
-            min-height: 2.5em;
-        }
+    .glow-btn {
+      margin-top: 1.5rem;
+      background: rgba(0, 255, 224, 0.1);
+      border: 1px solid var(--glow);
+      border-radius: 2vw;
+      color: var(--glow);
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.8rem 2rem;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0, 255, 224, 0.3);
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
 
-        .countdown {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            color: var(--glow);
-            font-weight: 600;
-            margin-bottom: 2vh;
-            text-shadow: 0 0 0.5vh rgba(0, 255, 224, 0.3);
-        }
+    .glow-btn:hover {
+      background: rgba(0, 255, 224, 0.2);
+      box-shadow: 0 0 25px rgba(0, 255, 224, 0.5);
+      transform: scale(1.05);
+    }
 
-        .glow-btn {
-            position: relative;
-            border: 0.15vw solid var(--glow);
-            background: rgba(0, 255, 224, 0.06);
-            border-radius: 50px;
-            padding: 1.5vh 3vw;
-            color: var(--glow);
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            font-weight: 600;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 0.8vh rgba(0, 255, 224, 0.3);
-            width: min(80%, 300px);
-            will-change: transform, box-shadow;
-        }
+    /* Pause Button */
+    #pauseBtn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      border: 1px solid var(--glow);
+      color: var(--glow);
+      background: rgba(0, 255, 224, 0.08);
+      border-radius: 8px;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s;
+    }
 
-        .glow-btn::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 180%;
-            height: 200%;
-            background: linear-gradient(90deg, #00ffe0, #00bfff, #00ffe0);
-            transform: translate(-50%, -50%) rotate(30deg);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+    #pauseBtn:hover {
+      background: rgba(0, 255, 224, 0.18);
+      transform: scale(1.05);
+    }
 
-        .glow-btn:hover::before {
-            opacity: 0.15;
-        }
+    /* Version Toast */
+    #version-toast {
+      position: fixed;
+      top: 6vh;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: none;
+      animation: slideDown 1s ease forwards;
+    }
 
-        .glow-btn:hover {
-            background-color: rgba(0, 255, 224, 0.1);
-            box-shadow: 0 0 2.5vh rgba(0, 255, 224, 0.45);
-            transform: translateY(-0.2vh) scale(1.02);
-        }
+    #version-toast .toast-inner {
+      background: linear-gradient(135deg, rgba(0, 255, 224, 0.2), rgba(0, 100, 255, 0.2));
+      border: 2px solid var(--glow);
+      border-radius: 1vw;
+      backdrop-filter: blur(15px);
+      color: #fff;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 0 30px rgba(0, 255, 224, 0.7);
+      animation: pulse 3s infinite ease-in-out;
+    }
 
-        .pulse-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 15vw;
-            height: 15vw;
-            max-width: 150px;
-            max-height: 150px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 255, 224, 0.15)0%, transparent 80%);
-            animation: pulse 2.5s infinite ease-in-out;
-            z-index: -1;
-            will-change: transform, opacity;
-        }
+    #version-toast button {
+      margin-top: 0.8rem;
+      border: 1px solid var(--glow);
+      background: rgba(0, 255, 224, 0.08);
+      color: var(--glow);
+      padding: 0.5rem 1.2rem;
+      border-radius: 1vw;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
 
-        @keyframes pulse {
-            0% {
-                transform: translate(-50%, -50%) scale(0.9);
-                opacity: 0.4;
-            }
+    #version-toast button:hover {
+      background: rgba(0, 255, 224, 0.2);
+      transform: scale(1.05);
+    }
 
-            50% {
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 0.25;
-            }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -50px);
+      }
 
-            100% {
-                transform: translate(-50%, -50%) scale(0.9);
-                opacity: 0.4;
-            }
-        }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
 
-        #emoji-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
+    /* Emoji Background */
+    #emoji-background {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        .emoji {
-            position: absolute;
-            font-size: clamp(1rem, 2.5vw, 2rem);
-            user-select: none;
-            animation: float linear infinite;
-            will-change: transform;
-        }
+    .emoji {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: floatRandom linear infinite;
+      opacity: 0.7;
+    }
 
-        @keyframes float {
-            0% {
-                transform: translate(0, 0);
-            }
+    @keyframes floatRandom {
+      0% {
+        transform: translate(0, 0);
+      }
 
-            25% {
-                transform: translate(2vw, 2vh);
-            }
+      25% {
+        transform: translate(5vw, 3vh);
+      }
 
-            50% {
-                transform: translate(0, 4vh);
-            }
+      50% {
+        transform: translate(-4vw, 5vh);
+      }
 
-            75% {
-                transform: translate(-2vw, 2vh);
-            }
+      75% {
+        transform: translate(3vw, -3vh);
+      }
 
-            100% {
-                transform: translate(0, 0);
-            }
-        }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
 
-        #pauseBtn {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1000;
-            background: rgba(0, 255, 224, 0.1);
-            border: 1px solid var(--glow);
-            color: var(--glow);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s, transform 0.2s;
-        }
+    @media (max-width: 600px) {
+      .card {
+        padding: 2rem 1.5rem;
+      }
 
-        #pauseBtn:hover {
-            background: rgba(0, 255, 224, 0.2);
-            transform: scale(1.05);
-        }
-
-        @media(max-width:768px) {
-            .card {
-                padding: 4vh 3vw;
-            }
-
-            h1 {
-                font-size: 2.2rem;
-                letter-spacing: 0.2vw;
-            }
-
-            .typing-text {
-                font-size: 1.1rem;
-            }
-
-            .glow-btn {
-                font-size: 1rem;
-                padding: 1.2vh 3vw;
-            }
-
-            .banner {
-                padding: 1vh 2vw;
-                font-size: 0.95rem;
-            }
-
-            .pulse-ring {
-                display: none;
-            }
-        }
-    </style>
+      .banner {
+        font-size: 0.9rem;
+        padding: 0.8rem 1.5rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div id="emoji-background"></div>
-    <button id="pauseBtn">⏸️ Pause Animations</button>
+  <button id="pauseBtn">⏸ Pause emoijs</button>
+  <div id="emoji-background"></div>
 
-    <div class="container visible" id="main-content">
-        <div class="banner"> You can now add games yourself (v1.6.7)</div>
-        <div class="card">
-            <div class="pulse-ring"></div>
-            <h1>🚀 Launch Portal</h1>
-            <p class="typing-text" id="typedText">Loading text...</p>
-            <p class="countdown" id="countdown"></p>
-            <!-- Your custom buttons -->
-            <button class="glow-btn" onclick="openEmbedded('https://code-andrewy.github.io/jumpman64beta/')">Jumpman64</button>
-            <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Bug fixer</a>
-        </div>
+  <div class="container">
+    <div class="banner"> Launch Portal v2.2</div>
+
+    <div class="card">
+      <h1>🚀Portal</h1>
+      <div class="typing-text" id="typewriter">Loading fact...</div>
+      <a class="glow-btn" id="launchBtn">Jumpman64</a>
+      <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Bug Report</a>
     </div>
+  </div>
 
-    <script>
-// ---------------------------
-// Typing effect
-// ---------------------------
-let messages = [];
-const typedText = document.getElementById("typedText");
-const typingSpeed = 35;
-const pauseDuration = 2000;
+  <div id="version-toast">
+    <div class="toast-inner">
+      ⚡ <b>Update Available!</b><br>
+      You’re using <b>v1.6.7</b> — latest is <b style="color:#00ffe0;">v2.2</b><br><br>
+      <button id="refreshBtn">🔄 Refresh and update</button>
+    </div>
+  </div>
 
-// Fetch a random fact from the correct API
-function fetchNewFact() {
-    return fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en")
-        .then(r => r.json())
-        .then(data => data.text)
-        .catch(e => {
-            console.error("Failed to fetch fact:", e);
-            return "Failed to load fact.";
-        });
-}
+  <script>
+    // Typewriter - Useless Facts
+    const typewriter = document.getElementById("typewriter");
+    const typingSpeed = 35, pauseDuration = 5000;
 
-// Initialize typing loop
-async function startTypingLoop() {
-    const msg = await fetchNewFact();
-    messages = [msg];
-    typedText.innerHTML = "";
-    typeMessage(msg);
-}
-
-function getRandomMessage() {
-    return messages[Math.floor(Math.random() * messages.length)];
-}
-
-function typeMessage(msg, i = 0) {
-    if (i < msg.length) {
-        typedText.innerHTML += msg.charAt(i);
-        setTimeout(() => typeMessage(msg, i + 1), typingSpeed);
-    } else {
-        setTimeout(() => eraseMessage(msg.length), pauseDuration);
-    }
-}
-
-function eraseMessage(len) {
-    if (len > 0) {
-        typedText.innerHTML = typedText.innerHTML.slice(0, -1);
-        setTimeout(() => eraseMessage(len - 1), typingSpeed / 1.5);
-    } else {
-        setTimeout(startTypingLoop, 500);
-    }
-}
-
-startTypingLoop();
-
-
-// ---------------------------
-// Countdown
-// ---------------------------
-const countdownEl = document.getElementById("countdown");
-// Target date: Nov 24, 2025, 12:00 PM UTC
-const launchDate = new Date(Date.UTC(2025, 10, 24, 12, 0, 0));
-
-function updateCountdown() {
-    const now = new Date();
-    const diff = launchDate - now;
-
-    if (diff <= 0) {
-        countdownEl.textContent = "🚀 The new update has Launched!";
-        clearInterval(countdownInterval);
-        return;
-    }
-
-    const totalSeconds = Math.floor(diff / 1000);
-    const days = Math.floor(totalSeconds / (3600 * 24));
-    const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s until update`;
-}
-
-updateCountdown();
-const countdownInterval = setInterval(updateCountdown, 1000);
-
-
-// ---------------------------
-// Open embedded buttons
-// ---------------------------
-function openEmbedded(url) {
-    const newWin = window.open("", "_blank");
-    if (newWin) {
-        const iframeHTML = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Home</title>
-                <style>
-                    html, body { margin:0; padding:0; height:100%; background:#0e0e0e; }
-                    iframe { width:100%; height:100%; border:none; }
-                </style>
-            </head>
-            <body>
-                <iframe src="${url}"></iframe>
-            </body>
-            </html>
-        `;
-        newWin.document.open();
-        newWin.document.write(iframeHTML);
-        newWin.document.close();
-    } else {
-        alert("Popup blocked.");
-    }
-}
-
-
-// ---------------------------
-// Rocket click animation
-// ---------------------------
-document.querySelector("h1").addEventListener("click", () => {
-    const h1 = document.querySelector("h1");
-    h1.classList.add("launching");
-    setTimeout(() => h1.classList.remove("launching"), 1300);
-});
-
-
-// ---------------------------
-// Emoji background
-// ---------------------------
-const emojis = ["🎮", "👾", "🕹️", "🚀"];
-const emojiContainer = document.getElementById("emoji-background");
-const numberOfEmojis = 20;
-for (let i = 0; i < numberOfEmojis; i++) {
-    const emojiEl = document.createElement("div");
-    emojiEl.classList.add("emoji");
-    emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    emojiEl.style.left = Math.random() * 100 + "vw";
-    emojiEl.style.top = Math.random() * 100 + "vh";
-    emojiEl.style.animationDuration = (Math.random() * 8 + 4) + "s";
-    emojiEl.style.fontSize = (Math.random() * 24 + 16) + "px";
-    emojiContainer.appendChild(emojiEl);
-}
-
-
-// ---------------------------
-// Pause/resume animations
-// ---------------------------
-const pauseBtn = document.getElementById("pauseBtn");
-
-function toggleAnimations(pause) {
-    document.querySelectorAll('.emoji,.pulse-ring,.banner,.card,.glow-btn')
-        .forEach(el => el.style.animationPlayState = pause ? 'paused' : 'running');
-    pauseBtn.textContent = pause ? '▶️ Resume Animations' : '⏸️ Pause Animations';
-    document.cookie = `animationsPaused=${pause?'1':'0'};path=/`;
-}
-
-// Check cookie to restore paused state
-toggleAnimations(document.cookie.includes('animationsPaused=1'));
-
-pauseBtn.addEventListener('click', () => {
-    toggleAnimations(pauseBtn.textContent.includes('Pause'));
-});
-
-
-// ---------------------------
-// Version Check + Toast Popup
-// ---------------------------
-const CURRENT_VERSION = "v1.6.7"; // local version
-const VERSION_URL = "https://raw.githubusercontent.com/code-andrewy/Games1232/main/version.json"; // remote version file
-
-async function checkVersion() {
-    try {
-        const res = await fetch(VERSION_URL + "?t=" + Date.now()); // avoid caching
+    async function fetchFact() {
+      try {
+        const res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
         const data = await res.json();
-        const latest = data.latest;
-
-        if (latest && latest !== CURRENT_VERSION) {
-            showVersionToast(latest);
-        }
-    } catch (err) {
-        console.error("Version check failed:", err);
+        return data.text;
+      } catch {
+        return "Couldn't load fact.";
+      }
     }
-}
 
-function showVersionToast(latest) {
-    const toast = document.createElement("div");
-    toast.id = "version-toast";
-    toast.innerHTML = `
-        <div style="
-            position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 0, 80, 0.95);
-            color: white;
-            padding: 1rem 2rem;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 0 20px rgba(255,0,80,0.6);
-            z-index: 9999;
-            text-align: center;
-            animation: slideDown 0.6s ease;
-        ">
-            ⚠️ You’re using an outdated version (${CURRENT_VERSION}).<br>
-            The latest is <b>${latest}</b>.<br><br>
-            <button id="refreshBtn" style="
-                background: white;
-                color: #ff0050;
-                border: none;
-                padding: 0.5rem 1rem;
-                border-radius: 8px;
-                font-weight: 700;
-                cursor: pointer;
-                transition: background 0.3s;
-            ">🔄 Refresh</button>
-        </div>
-    `;
+    async function startTyping() {
+      const fact = await fetchFact();
+      typewriter.textContent = "";
+      typeText(fact);
+    }
 
-    const style = document.createElement("style");
-    style.textContent = `
-        @keyframes slideDown {
-            from { transform: translate(-50%, -100%); opacity: 0; }
-            to { transform: translate(-50%, 0); opacity: 1; }
-        }
-        #refreshBtn:hover {
-            background: #ffe5ed;
-        }
-    `;
-    document.head.appendChild(style);
+    function typeText(text, i = 0) {
+      if (i < text.length) {
+        typewriter.textContent += text.charAt(i);
+        setTimeout(() => typeText(text, i + 1), typingSpeed);
+      } else {
+        setTimeout(startTyping, pauseDuration);
+      }
+    }
+    startTyping();
 
-    document.body.appendChild(toast);
+    // Emoji background - optimized
+    const emojis = ["🎮", "🚀", "💫", "👾", "🕹️"];
+    const bg = document.getElementById("emoji-background");
+    const emojiCount = 10;
+    for (let i = 0; i < emojiCount; i++) {
+      const e = document.createElement("div");
+      e.className = "emoji";
+      e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      e.style.left = Math.random() * 100 + "%";
+      e.style.top = Math.random() * 100 + "%";
+      e.style.animationDuration = 15 + Math.random() * 10 + "s";
+      e.style.fontSize = 1 + Math.random() * 1.5 + "rem";
+      bg.appendChild(e);
+    }
 
-    document.getElementById("refreshBtn").addEventListener("click", () => {
-        location.reload();
+    // Pause button
+    const pauseBtn = document.getElementById("pauseBtn");
+    pauseBtn.addEventListener("click", () => {
+      const paused = document.body.classList.toggle("paused");
+      pauseBtn.textContent = paused ? "▶️ Resume emojis" : "⏸ Pause emoijs";
+      document.querySelectorAll(".emoji").forEach(e => e.style.animationPlayState = paused ? "paused" : "running");
     });
-}
 
-checkVersion();
-    </script>
+    // Launch Jumpman64 embedded
+    const launchBtn = document.getElementById("launchBtn");
+    launchBtn.addEventListener("click", () => {
+      const newWin = window.open("", "_blank");
+      if (newWin) {
+        newWin.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Jumpman64</title>
+            <style>html,body{margin:0;padding:0;height:100%;background:#0e0e0e;} iframe{width:100%;height:100%;border:none;}</style>
+          </head>
+          <body>
+            <iframe src="https://code-andrewy.github.io/jumpman64beta/"></iframe>
+          </body>
+          </html>
+        `);
+        newWin.document.close();
+      } else {
+        alert("Popup blocked");
+      }
+    });
+
+    // Version toast (example)
+    const versionToast = document.getElementById("version-toast");
+    versionToast.style.display = "block";
+    document.getElementById("refreshBtn").addEventListener("click", () => location.reload());
+  </script>
 </body>
 
 </html>
