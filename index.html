@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal v2.2</title>
+  <title>Portal </title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png"
-    href="https://raw.githubusercontent.com/code-andrewy/Games1232/refs/heads/main/image-removebg-preview%20(32).png" />
+    href="https://raw.githubusercontent.com/code-andrewy/Games1232/main/image-removebg-preview%20(32).png" />
 
   <style>
     :root {
@@ -146,58 +146,6 @@
       transform: scale(1.05);
     }
 
-    #version-toast {
-      position: fixed;
-      top: 6vh;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      display: none;
-      animation: slideDown 1s ease forwards;
-    }
-
-    #version-toast .toast-inner {
-      background: linear-gradient(135deg, rgba(0, 255, 224, 0.2), rgba(0, 100, 255, 0.2));
-      border: 2px solid var(--glow);
-      border-radius: 1vw;
-      backdrop-filter: blur(15px);
-      color: #fff;
-      padding: 1rem 2rem;
-      text-align: center;
-      font-weight: 600;
-      box-shadow: 0 0 30px rgba(0, 255, 224, 0.7);
-      animation: pulse 3s infinite ease-in-out;
-    }
-
-    #version-toast button {
-      margin-top: 0.8rem;
-      border: 1px solid var(--glow);
-      background: rgba(0, 255, 224, 0.08);
-      color: var(--glow);
-      padding: 0.5rem 1.2rem;
-      border-radius: 1vw;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    #version-toast button:hover {
-      background: rgba(0, 255, 224, 0.2);
-      transform: scale(1.05);
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translate(-50%, -50px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-      }
-    }
-
     #emoji-background {
       position: absolute;
       inset: 0;
@@ -240,23 +188,11 @@
       <div class="typing-text" id="typewriter">Loading fact...</div>
       <a class="glow-btn" id="launchBtn">Jumpman64</a>
       <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Bug Report</a>
+      <a class="glow-btn" id="githubBtn">Our app</a>
     </div>
   </div>
 
-  <div id="version-toast">
-    <div class="toast-inner"></div>
-  </div>
-
   <script>
-    // Version
-    const currentVersion = "v2.2";
-    const latestVersion = "v2.2"; // Change to simulate update
-
-    // Banner and title
-    document.title = `Portal ${currentVersion}`;
-    document.querySelector(".banner").textContent = `Launch Portal ${currentVersion}`;
-
-    // Typewriter
     const typewriter = document.getElementById("typewriter");
     const typingSpeed = 35, pauseDuration = 5000;
 
@@ -300,7 +236,7 @@
       bg.appendChild(e);
     }
 
-    // Pause button
+    // Pause emojis
     const pauseBtn = document.getElementById("pauseBtn");
     pauseBtn.addEventListener("click", () => {
       const paused = document.body.classList.toggle("paused");
@@ -331,18 +267,25 @@
       }
     });
 
-    // Version toast
-    if (currentVersion !== latestVersion) {
-      const toast = document.getElementById("version-toast");
-      const toastInner = toast.querySelector(".toast-inner");
-      toastInner.innerHTML = `
-        ⚡ <b>Update Available!</b><br>
-        You’re using <b>${currentVersion}</b> — latest is <b style="color:#00ffe0;">${latestVersion}</b><br><br>
-        <button id="refreshBtn">🔄 Refresh and update</button>
-      `;
-      toast.style.display = "block";
-      document.getElementById("refreshBtn").addEventListener("click", () => location.reload());
-    }
+    // GitHub fetch button
+    const githubBtn = document.getElementById("githubBtn");
+    githubBtn.addEventListener("click", async () => {
+      const url = "https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html";
+      try {
+        const response = await fetch(url);
+        const htmlContent = await response.text();
+        const newWin = window.open("", "_blank");
+        if (newWin) {
+          newWin.document.write(htmlContent);
+          newWin.document.close();
+        } else {
+          alert("Popup blocked");
+        }
+      } catch (err) {
+        alert("Failed to fetch GitHub file.");
+        console.error(err);
+      }
+    });
   </script>
 </body>
 
