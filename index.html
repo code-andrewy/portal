@@ -192,100 +192,112 @@
     </div>
   </div>
 
-  <script>
-    const typewriter = document.getElementById("typewriter");
-    const typingSpeed = 35, pauseDuration = 5000;
+<script>
+  const typewriter = document.getElementById("typewriter");
+  const typingSpeed = 35, pauseDuration = 5000;
 
-    async function fetchFact() {
-      try {
-        const res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
-        const data = await res.json();
-        return data.text;
-      } catch {
-        return "Couldn't load fact.";
-      }
+  // --- Random Fact Typing Animation ---
+  async function fetchFact() {
+    try {
+      const res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
+      const data = await res.json();
+      return data.text;
+    } catch {
+      return "Couldn't load fact.";
+    }
+  }
+
+  async function startTyping() {
+    const fact = await fetchFact();
+    typewriter.textContent = "";
+    typeText(fact);
+  }
+
+  function typeText(text, i = 0) {
+    if (i < text.length) {
+      typewriter.textContent += text.charAt(i);
+      setTimeout(() => typeText(text, i + 1), typingSpeed);
+    } else {
+      setTimeout(startTyping, pauseDuration);
+    }
+  }
+  startTyping();
+
+  // --- Emoji Background Animation ---
+  const emojis = ["🎮", "🚀", "💫", "👾", "🕹️"];
+  const bg = document.getElementById("emoji-background");
+  for (let i = 0; i < 10; i++) {
+    const e = document.createElement("div");
+    e.className = "emoji";
+    e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    e.style.left = Math.random() * 100 + "%";
+    e.style.top = Math.random() * 100 + "%";
+    e.style.animationDuration = 15 + Math.random() * 10 + "s";
+    e.style.fontSize = 1 + Math.random() * 1.5 + "rem";
+    bg.appendChild(e);
+  }
+
+  // --- Pause / Resume Emoji Animation ---
+  const pauseBtn = document.getElementById("pauseBtn");
+  pauseBtn.addEventListener("click", () => {
+    const paused = document.body.classList.toggle("paused");
+    pauseBtn.textContent = paused ? "▶️ Resume emojis" : "⏸ Pause emojis";
+    document.querySelectorAll(".emoji").forEach(e =>
+      e.style.animationPlayState = paused ? "paused" : "running"
+    );
+  });
+
+  // --- Launch Jumpman64 (Works on iPhone now) ---
+  const launchBtn = document.getElementById("launchBtn");
+  launchBtn.addEventListener("click", () => {
+    // Must open first to avoid Safari null
+    const newWin = window.open("about:blank", "_blank");
+    if (!newWin) {
+      alert("Popup blocked. Please allow popups for this site.");
+      return;
     }
 
-    async function startTyping() {
-      const fact = await fetchFact();
-      typewriter.textContent = "";
-      typeText(fact);
+    newWin.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Jumpman64</title>
+        <style>
+          html,body { margin:0; padding:0; height:100%; background:#0e0e0e; }
+          iframe { width:100%; height:100%; border:none; }
+        </style>
+      </head>
+      <body>
+        <iframe src="https://code-andrewy.github.io/jumpman64beta/"></iframe>
+      </body>
+      </html>
+    `);
+    newWin.document.close();
+  });
+
+  // --- GitHub "Our App" Button (iPhone-safe) ---
+  const githubBtn = document.getElementById("githubBtn");
+  githubBtn.addEventListener("click", () => {
+    // Open first
+    const newWin = window.open("about:blank", "_blank");
+    if (!newWin) {
+      alert("Popup blocked. Please allow popups for this site.");
+      return;
     }
 
-    function typeText(text, i = 0) {
-      if (i < text.length) {
-        typewriter.textContent += text.charAt(i);
-        setTimeout(() => typeText(text, i + 1), typingSpeed);
-      } else {
-        setTimeout(startTyping, pauseDuration);
-      }
-    }
-    startTyping();
-
-    // Emoji background
-    const emojis = ["🎮", "🚀", "💫", "👾", "🕹️"];
-    const bg = document.getElementById("emoji-background");
-    for (let i = 0; i < 10; i++) {
-      const e = document.createElement("div");
-      e.className = "emoji";
-      e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      e.style.left = Math.random() * 100 + "%";
-      e.style.top = Math.random() * 100 + "%";
-      e.style.animationDuration = 15 + Math.random() * 10 + "s";
-      e.style.fontSize = 1 + Math.random() * 1.5 + "rem";
-      bg.appendChild(e);
-    }
-
-    // Pause emojis
-    const pauseBtn = document.getElementById("pauseBtn");
-    pauseBtn.addEventListener("click", () => {
-      const paused = document.body.classList.toggle("paused");
-      pauseBtn.textContent = paused ? "▶️ Resume emojis" : "⏸ Pause emojis";
-      document.querySelectorAll(".emoji").forEach(e => e.style.animationPlayState = paused ? "paused" : "running");
-    });
-
-    // Launch Jumpman64
-    const launchBtn = document.getElementById("launchBtn");
-    launchBtn.addEventListener("click", () => {
-      const newWin = window.open("", "_blank");
-      if (newWin) {
-        newWin.document.write(`
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>Jumpman64</title>
-            <style>html,body{margin:0;padding:0;height:100%;background:#0e0e0e;} iframe{width:100%;height:100%;border:none;}</style>
-          </head>
-          <body>
-            <iframe src="https://code-andrewy.github.io/jumpman64beta/"></iframe>
-          </body>
-          </html>
-        `);
+    // Load HTML safely after opening
+    fetch("https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html")
+      .then(res => res.text())
+      .then(html => {
+        newWin.document.open();
+        newWin.document.write(html);
         newWin.document.close();
-      } else {
-        alert("Popup blocked");
-      }
-    });
-
-    // GitHub fetch button
-    const githubBtn = document.getElementById("githubBtn");
-    githubBtn.addEventListener("click", async () => {
-      const url = "https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html";
-      try {
-        const response = await fetch(url);
-        const htmlContent = await response.text();
-        const newWin = window.open("", "_blank");
-        if (newWin) {
-          newWin.document.write(htmlContent);
-          newWin.document.close();
-        } else {
-          alert("Popup blocked");
-        }
-      } catch (err) {
-        alert("Failed to fetch GitHub file.");
+      })
+      .catch(err => {
+        newWin.document.write("<h2>Failed to load app from GitHub 😢</h2>");
         console.error(err);
-      }
-    });
+      });
+  });
   </script>
 </body>
 
