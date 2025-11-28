@@ -1,304 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> Cheese </title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png"
-    href="https://raw.githubusercontent.com/code-andrewy/Games1232/main/image-removebg-preview%20(32).png" />
-
-  <style>
-    :root {
-      --glow: #00ffe0;
-      --text-muted: #cfcfcf;
-      --card-bg: rgba(255, 255, 255, 0.07);
-      --banner-bg: rgba(255, 255, 255, 0.05);
-      --shadow-color: rgba(0, 255, 224, 0.3);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: radial-gradient(circle at 20% 20%, #1b2735 0%, #090a0f 100%);
-      color: white;
-      font-family: 'Outfit', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      width: 100%;
-      height: 100%;
-      padding: 3vh 3vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2vh;
-      position: relative;
-      text-align: center;
-      z-index: 1;
-    }
-
-    .banner {
-      background: var(--banner-bg);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 2vw;
-      padding: 1rem 2.5rem;
-      color: var(--glow);
-      font-weight: 600;
-      font-size: 1rem;
-      text-shadow: 0 0 10px rgba(0, 255, 224, 0.3);
-      box-shadow: 0 0 15px var(--shadow-color);
-      animation: pulse 3s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        box-shadow: 0 0 10px rgba(0, 255, 224, 0.3);
-      }
-
-      50% {
-        box-shadow: 0 0 25px rgba(0, 255, 224, 0.5);
-      }
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 1.5vw;
-      padding: 3vh 4vw;
-      backdrop-filter: blur(10px);
-      max-width: 650px;
-      width: 90%;
-      box-shadow: 0 0 25px rgba(0, 255, 224, 0.15);
-      transition: all 0.3s;
-    }
-
-    .card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 35px rgba(0, 255, 224, 0.3);
-    }
-
-    h1 {
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      margin-bottom: 0.6rem;
-    }
-
-    .typing-text {
-      color: var(--text-muted);
-      min-height: 2.2em;
-      font-size: 1.05rem;
-      margin: 1rem 0;
-    }
-
-    .glow-btn {
-      margin-top: 1.5rem;
-      background: rgba(0, 255, 224, 0.1);
-      border: 1px solid var(--glow);
-      border-radius: 2vw;
-      color: var(--glow);
-      font-weight: 600;
-      font-size: 1.1rem;
-      padding: 0.8rem 2rem;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(0, 255, 224, 0.3);
-      transition: all 0.3s ease;
-      display: inline-block;
-      text-decoration: none;
-    }
-
-    .glow-btn:hover {
-      background: rgba(0, 255, 224, 0.2);
-      box-shadow: 0 0 25px rgba(0, 255, 224, 0.5);
-      transform: scale(1.05);
-    }
-
-    #pauseBtn {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      border: 1px solid var(--glow);
-      color: var(--glow);
-      background: rgba(0, 255, 224, 0.08);
-      border-radius: 8px;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      z-index: 10;
-      transition: all 0.3s;
-    }
-
-    #pauseBtn:hover {
-      background: rgba(0, 255, 224, 0.18);
-      transform: scale(1.05);
-    }
-
-    #emoji-background {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .emoji {
-      position: absolute;
-      font-size: 1.5rem;
-      animation: floatRandom linear infinite;
-      opacity: 0.7;
-    }
-
-    @keyframes floatRandom {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(5vw, 3vh); }
-      50% { transform: translate(-4vw, 5vh); }
-      75% { transform: translate(3vw, -3vh); }
-      100% { transform: translate(0, 0); }
-    }
-
-    @media (max-width: 600px) {
-      .card { padding: 2rem 1.5rem; }
-      .banner { font-size: 0.9rem; padding: 0.8rem 1.5rem; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheese + Weather + Icons + Shortcut</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="https://raw.githubusercontent.com/code-andrewy/Games1232/main/image-removebg-preview%20(32).png">
+<!-- Cloudflare Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--glow:#00ffe0;--text-muted:#cfcfcf;--card-bg:rgba(255,255,255,0.07);--banner-bg:rgba(255,255,255,0.05);--shadow:rgba(0,255,224,0.3)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:radial-gradient(circle at 20% 20%,#1b2735 0%,#090a0f 100%);color:#fff;font-family:'Outfit',sans-serif;display:flex;justify-content:center;align-items:center}
+.container{width:100%;height:100%;padding:3vh 3vw;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2vh;position:relative;text-align:center;z-index:1}
+.banner{background:var(--banner-bg);border:1px solid rgba(255,255,255,0.15);border-radius:2vw;padding:1rem 2.5rem;color:var(--glow);font-weight:600;font-size:1rem;text-shadow:0 0 10px var(--shadow);box-shadow:0 0 15px var(--shadow);animation:pulse 3s infinite ease-in-out}
+@keyframes pulse{0%,100%{box-shadow:0 0 10px var(--shadow)}50%{box-shadow:0 0 25px rgba(0,255,224,0.5)}}
+.card{background:var(--card-bg);border:1px solid rgba(255,255,255,0.12);border-radius:1.5vw;padding:3vh 4vw;backdrop-filter:blur(10px);max-width:650px;width:90%;box-shadow:0 0 25px rgba(0,255,224,0.15);transition:all 0.3s}
+.card:hover{transform:scale(1.02);box-shadow:0 0 35px rgba(0,255,224,0.3)}
+h1{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:0.6rem}
+.typing-text{color:var(--text-muted);min-height:2.2em;font-size:1.05rem;margin:1rem 0}
+.glow-btn{margin-top:1.5rem;background:rgba(0,255,224,0.1);border:1px solid var(--glow);border-radius:2vw;color:var(--glow);font-weight:600;font-size:1.1rem;padding:.8rem 2rem;cursor:pointer;box-shadow:0 0 15px var(--shadow);transition:.3s;display:inline-block;text-decoration:none}
+.glow-btn i{margin-right:.5rem}
+.glow-btn:hover{background:rgba(0,255,224,0.2);box-shadow:0 0 25px rgba(0,255,224,0.5);transform:scale(1.05)}
+#pauseBtn{position:fixed;top:1rem;right:1rem;border:1px solid var(--glow);color:var(--glow);background:rgba(0,255,224,0.08);border-radius:8px;font-weight:600;padding:.5rem 1rem;cursor:pointer;z-index:10;transition:.3s}
+#pauseBtn:hover{background:rgba(0,255,224,0.18);transform:scale(1.05)}
+#emoji-background{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.emoji{position:absolute;font-size:1.5rem;animation:float linear infinite;opacity:.7}
+@keyframes float{0%{transform:translate(0,0)}25%{transform:translate(5vw,3vh)}50%{transform:translate(-4vw,5vh)}75%{transform:translate(3vw,-3vh)}100%{transform:translate(0,0)}}
+.weather{margin-top:1rem;font-size:1.2rem}
+.weather i{margin-right:.5rem}
+@media(max-width:600px){.card{padding:2rem 1.5rem}.banner{font-size:.9rem;padding:.8rem 1.5rem}}
+</style>
 </head>
-
 <body>
-  <button id="pauseBtn">⏸ Pause emojis</button>
-  <div id="emoji-background"></div>
-
-  <div class="container">
-    <div class="banner">Thoughts on cheese related products 🧀</div>
-
-    <div class="card">
-      <h1>Portal🚀 (2.5)</h1>
-      <div class="typing-text" id="typewriter">Loading fact...</div>
-      <a class="glow-btn" id="launchBtn">Launch jumpman64</a>
-      <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">Bug Report</a>
-      <a class="glow-btn" id="githubBtn">Our app</a>
-    </div>
-  </div>
-
+<button id="pauseBtn"><i class="fas fa-pause"></i> Pause emojis</button>
+<div id="emoji-background"></div>
+<div class="container">
+<div class="banner"><i class="fas fa-cheese"></i> Thoughts on cheese related products 🧀</div>
+<div class="card">
+<h1><i class="fas fa-rocket"></i> Portal🚀 (2.5)</h1>
+<div class="typing-text" id="typewriter">Loading fact...</div>
+<div class="weather"><i id="weatherEmoji" class="fas fa-cloud"></i> <span id="weatherText">Loading weather...</span></div>
+<a class="glow-btn" id="launchBtn"><i class="fas fa-play"></i> Launch jumpman64</a>
+<a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank"><i class="fas fa-bug"></i> Bug Report</a>
+<a class="glow-btn" id="githubBtn"><i class="fab fa-github"></i> Our app</a>
+</div>
+</div>
 <script>
-  const typewriter = document.getElementById("typewriter");
-  const typingSpeed = 35, pauseDuration = 5000;
+// --- Typewriter ---
+const typeEl=document.getElementById("typewriter"),speed=35,pause=5e3;
+async function fetchFact(){try{let r=await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");return(await r.json()).text}catch{return"Couldn't load fact."}}
+async function startTyping(){const t=await fetchFact();typeEl.textContent="";typeText(t)}
+function typeText(t,i=0){i<t.length?(typeEl.textContent+=t[i],setTimeout(()=>typeText(t,i+1),speed)):setTimeout(startTyping,pause)}
+startTyping();
 
-  // --- Random Fact Typing Animation ---
-  async function fetchFact() {
-    try {
-      const res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
-      const data = await res.json();
-      return data.text;
-    } catch {
-      return "Couldn't load fact.";
-    }
+// --- Emoji Background ---
+const emojis=["🎮","🚀","💫","👾","🕹️"],bg=document.getElementById("emoji-background");
+for(let i=0;i<10;i++){let e=document.createElement("div");e.className="emoji";e.textContent=emojis[Math.floor(Math.random()*emojis.length)];e.style.left=Math.random()*100+"%";e.style.top=Math.random()*100+"%";e.style.animationDuration=15+Math.random()*10+"s";e.style.fontSize=1+Math.random()*1.5+"rem";bg.appendChild(e)}
+document.getElementById("pauseBtn").addEventListener("click",()=>{const paused=document.body.classList.toggle("paused");pauseBtn.innerHTML=paused?"<i class='fas fa-play'></i> Resume emojis":"<i class='fas fa-pause'></i> Pause emojis";document.querySelectorAll(".emoji").forEach(e=>e.style.animationPlayState=paused?"paused":"running")})
+
+// --- Launch buttons ---
+function launchJumpman(){
+  const w=window.open("about:blank","_blank");if(!w){alert("Popup blocked.");return}w.document.write(`<!DOCTYPE html><html><head><title>Jumpman64</title><style>html,body{margin:0;padding:0;height:100%;background:#0e0e0e}iframe{width:100%;height:100%;border:none}</style></head><body><iframe src="https://definitelynotabypass.pages.dev//"></iframe></body></html>`);w.document.close()
+}
+document.getElementById("launchBtn").addEventListener("click", launchJumpman);
+document.getElementById("githubBtn").addEventListener("click",()=>{
+  const w=window.open("about:blank","_blank");if(!w){alert("Popup blocked.");return}
+  fetch("https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html").then(r=>r.text()).then(h=>{w.document.open();w.document.write(h);w.document.close()}).catch(()=>w.document.write("<h2>Failed to load app from GitHub 😢</h2>"))
+})
+
+// --- Keyboard Shortcut: Ctrl+J / Cmd+J ---
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'j') {
+    e.preventDefault();
+    launchJumpman();
   }
+});
 
-  async function startTyping() {
-    const fact = await fetchFact();
-    typewriter.textContent = "";
-    typeText(fact);
-  }
-
-  function typeText(text, i = 0) {
-    if (i < text.length) {
-      typewriter.textContent += text.charAt(i);
-      setTimeout(() => typeText(text, i + 1), typingSpeed);
-    } else {
-      setTimeout(startTyping, pauseDuration);
-    }
-  }
-  startTyping();
-
-  // --- Emoji Background Animation ---
-  const emojis = ["🎮", "🚀", "💫", "👾", "🕹️"];
-  const bg = document.getElementById("emoji-background");
-  for (let i = 0; i < 10; i++) {
-    const e = document.createElement("div");
-    e.className = "emoji";
-    e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    e.style.left = Math.random() * 100 + "%";
-    e.style.top = Math.random() * 100 + "%";
-    e.style.animationDuration = 15 + Math.random() * 10 + "s";
-    e.style.fontSize = 1 + Math.random() * 1.5 + "rem";
-    bg.appendChild(e);
-  }
-
-  // --- Pause / Resume Emoji Animation ---
-  const pauseBtn = document.getElementById("pauseBtn");
-  pauseBtn.addEventListener("click", () => {
-    const paused = document.body.classList.toggle("paused");
-    pauseBtn.textContent = paused ? "▶️ Resume emojis" : "⏸ Pause emojis";
-    document.querySelectorAll(".emoji").forEach(e =>
-      e.style.animationPlayState = paused ? "paused" : "running"
-    );
-  });
-
-  // --- Launch Jumpman64 (Works on iPhone now) ---
-  const launchBtn = document.getElementById("launchBtn");
-  launchBtn.addEventListener("click", () => {
-    // Must open first to avoid Safari null
-    const newWin = window.open("about:blank", "_blank");
-    if (!newWin) {
-      alert("Popup blocked. Please allow popups for this site.");
-      return;
-    }
-
-    newWin.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Jumpman64</title>
-        <style>
-          html,body { margin:0; padding:0; height:100%; background:#0e0e0e; }
-          iframe { width:100%; height:100%; border:none; }
-        </style>
-      </head>
-      <body>
-        <iframe src="https://definitelynotabypass.pages.dev//"></iframe>
-      </body>
-      </html>
-    `);
-    newWin.document.close();
-  });
-
-  // --- GitHub "Our App" Button (iPhone-safe) ---
-  const githubBtn = document.getElementById("githubBtn");
-  githubBtn.addEventListener("click", () => {
-    // Open first
-    const newWin = window.open("about:blank", "_blank");
-    if (!newWin) {
-      alert("Popup blocked. Please allow popups for this site.");
-      return;
-    }
-
-    // Load HTML safely after opening
-    fetch("https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html")
-      .then(res => res.text())
-      .then(html => {
-        newWin.document.open();
-        newWin.document.write(html);
-        newWin.document.close();
-      })
-      .catch(err => {
-        newWin.document.write("<h2>Failed to load app from GitHub 😢</h2>");
-        console.error(err);
-      });
-  });
-  </script>
+// --- Weather (Pittsfield NH) ---
+const loc={lat:43.4426,lon:-71.2776},weatherText=document.getElementById("weatherText"),weatherEmoji=document.getElementById("weatherEmoji");
+async function getWeather(){try{
+  const point=await(await fetch(`https://api.weather.gov/points/${loc.lat},${loc.lon}`)).json();
+  const f=await(await fetch(point.properties.forecast)).json();
+  const p=f.properties.periods[0];
+  weatherText.textContent=p.temperature+"°"+p.temperatureUnit+" — "+p.shortForecast;
+  const s=p.shortForecast.toLowerCase();
+  weatherEmoji.className="fas fa-cloud";
+  if(s.includes("sunny")) weatherEmoji.className="fas fa-sun";
+  else if(s.includes("rain")) weatherEmoji.className="fas fa-cloud-showers-heavy";
+  else if(s.includes("snow")) weatherEmoji.className="fas fa-snowflake";
+  else if(s.includes("storm")||s.includes("thunder")) weatherEmoji.className="fas fa-bolt";
+  else if(s.includes("clear")) weatherEmoji.className="fas fa-sun";
+}catch{weatherText.textContent="Weather unavailable 😕"}}
+getWeather(); setInterval(getWeather,300000);
+</script>
 </body>
-
 </html>
