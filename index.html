@@ -36,16 +36,17 @@ h1{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:0.6rem}
 <button id="pauseBtn"><i class="fas fa-pause"></i> Pause emojis</button>
 <div id="emoji-background"></div>
 <div class="container">
-<div class="banner"><i class="fas fa-cheese"></i> Thoughts on cheese related products 🧀</div>
-<div class="card">
-<h1><i class="fas fa-rocket"></i> Portal🚀 (3.0)</h1>
-<div class="typing-text" id="typewriter">Loading fact...</div>
-<div class="weather"><i id="weatherEmoji" class="fas fa-cloud"></i> <span id="weatherText">Loading weather...</span></div>
-<a class="glow-btn" id="launchBtn"><i class="fas fa-play"></i> Launch jumpman64</a>
-<a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank"><i class="fas fa-bug"></i> Bug Report</a>
-<a class="glow-btn" id="githubBtn"><i class="fab fa-github"></i> Our app</a>
+    <div class="banner"><i class="fas fa-cheese"></i> Thoughts on cheese related products 🧀</div>
+    <div class="card">
+        <h1><i class="fas fa-rocket"></i> Portal🚀 (3.0)</h1>
+        <div class="typing-text" id="typewriter">Loading fact...</div>
+        <div class="weather"><i id="weatherEmoji" class="fas fa-cloud"></i> <span id="weatherText">Loading weather...</span></div>
+        <a class="glow-btn" id="launchBtn"><i class="fas fa-play"></i> Launch jumpman64</a>
+        <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank"><i class="fas fa-bug"></i> Bug Report</a>
+        <a class="glow-btn" id="githubBtn"><i class="fab fa-github"></i> Our app</a>
+    </div>
 </div>
-</div>
+
 <script>
 // --- Typewriter ---
 const typeEl=document.getElementById("typewriter"),speed=35,pause=5e3;
@@ -77,22 +78,54 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// --- Weather (Pittsfield NH) ---
-const loc={lat:43.4426,lon:-71.2776},weatherText=document.getElementById("weatherText"),weatherEmoji=document.getElementById("weatherEmoji");
-async function getWeather(){try{
-  const point=await(await fetch(`https://api.weather.gov/points/${loc.lat},${loc.lon}`)).json();
-  const f=await(await fetch(point.properties.forecast)).json();
-  const p=f.properties.periods[0];
-  weatherText.textContent=p.temperature+"°"+p.temperatureUnit+" — "+p.shortForecast;
-  const s=p.shortForecast.toLowerCase();
-  weatherEmoji.className="fas fa-cloud";
-  if(s.includes("sunny")) weatherEmoji.className="fas fa-sun";
-  else if(s.includes("rain")) weatherEmoji.className="fas fa-cloud-showers-heavy";
-  else if(s.includes("snow")) weatherEmoji.className="fas fa-snowflake";
-  else if(s.includes("storm")||s.includes("thunder")) weatherEmoji.className="fas fa-bolt";
-  else if(s.includes("clear")) weatherEmoji.className="fas fa-sun";
-}catch{weatherText.textContent="Weather unavailable 😕"}}
-getWeather(); setInterval(getWeather,300000);
+// --- Weather with geolocation ---
+const weatherText = document.getElementById("weatherText");
+const weatherEmoji = document.getElementById("weatherEmoji");
+
+async function getWeather(lat, lon) {
+    try {
+        const point = await (await fetch(`https://api.weather.gov/points/${lat},${lon}`)).json();
+        const forecast = await (await fetch(point.properties.forecast)).json();
+        const period = forecast.properties.periods[0];
+        const s = period.shortForecast.toLowerCase();
+
+        weatherText.textContent = `${period.temperature}°${period.temperatureUnit} — ${period.shortForecast}`;
+        weatherEmoji.className = "fas fa-cloud";
+        if (s.includes("sunny") || s.includes("clear")) weatherEmoji.className = "fas fa-sun";
+        else if (s.includes("rain")) weatherEmoji.className = "fas fa-cloud-showers-heavy";
+        else if (s.includes("snow")) weatherEmoji.className = "fas fa-snowflake";
+        else if (s.includes("storm") || s.includes("thunder")) weatherEmoji.className = "fas fa-bolt";
+    } catch {
+        weatherText.textContent = "Weather unavailable 😕";
+    }
+}
+
+async function getLocationWeather() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // Reverse geocode city + state
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                const data = await res.json();
+                const city = data.address.city || data.address.town || data.address.village || "";
+                const state = data.address.state || "";
+                weatherText.textContent = `${city}, ${state} — Loading weather...`;
+            } catch {}
+
+            getWeather(lat, lon);
+            setInterval(() => getWeather(lat, lon), 300000);
+        }, () => {
+            weatherText.textContent = "Location access denied 😕";
+        });
+    } else {
+        weatherText.textContent = "Geolocation not supported 😕";
+    }
+}
+
+getLocationWeather();
 </script>
 </body>
 </html>
