@@ -78,7 +78,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// --- Weather with geolocation ---
+// --- Weather with default to Pittsfield ---
 const weatherText = document.getElementById("weatherText");
 const weatherEmoji = document.getElementById("weatherEmoji");
 
@@ -101,27 +101,40 @@ async function getWeather(lat, lon) {
 }
 
 async function getLocationWeather() {
+    const defaultLat = 42.4501; // Pittsfield latitude
+    const defaultLon = -73.2454; // Pittsfield longitude
+    const defaultCity = "Pittsfield";
+    const defaultState = "MA";
+
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
 
-            // Reverse geocode city + state
-            try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-                const data = await res.json();
-                const city = data.address.city || data.address.town || data.address.village || "";
-                const state = data.address.state || "";
-                weatherText.textContent = `${city}, ${state} — Loading weather...`;
-            } catch {}
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                    const data = await res.json();
+                    const city = data.address.city || data.address.town || data.address.village || defaultCity;
+                    const state = data.address.state || defaultState;
+                    weatherText.textContent = `${city}, ${state} — Loading weather...`;
+                } catch {
+                    weatherText.textContent = `${defaultCity}, ${defaultState} — Loading weather...`;
+                }
 
-            getWeather(lat, lon);
-            setInterval(() => getWeather(lat, lon), 300000);
-        }, () => {
-            weatherText.textContent = "Location access denied 😕";
-        });
-    } else {
-        weatherText.textContent = "Geolocation not supported 😕";
+                getWeather(lat, lon);
+                setInterval(() => getWeather(lat, lon), 300000);
+            },
+            () => { // If geolocation fails
+                weatherText.textContent = `${defaultCity}, ${defaultState} — Loading weather...`;
+                getWeather(defaultLat, defaultLon);
+                setInterval(() => getWeather(defaultLat, defaultLon), 300000);
+            }
+        );
+    } else { // Geolocation not supported
+        weatherText.textContent = `${defaultCity}, ${defaultState} — Loading weather...`;
+        getWeather(defaultLat, defaultLon);
+        setInterval(() => getWeather(defaultLat, defaultLon), 300000);
     }
 }
 
