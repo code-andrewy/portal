@@ -225,79 +225,257 @@ body{
 </div>
 
 <script>
-/* Typewriter */
-const typeEl=document.getElementById("typewriter");
-async function fetchFact(){
-  try{
-    const r=await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
-    const j=await r.json();
-    return j.text;
-  }catch{return"Welcome back."}
-}
-async function startTyping(){
-  const t=await fetchFact();
-  typeEl.textContent="";
-  let i=0;
-  const s=setInterval(()=>{
-    if(i<t.length) typeEl.textContent+=t[i++];
-    else{clearInterval(s);setTimeout(startTyping,5000);}
-  },30);
-}
-startTyping();
+(() => {
+  'use strict';
 
-/* Emojis */
-const emojis=["🎮","🚀","👾","💫","🕹️"];
-const layer=document.getElementById("emoji-layer");
-const items=[];
-let paused=false;
+  /* ======= Helpers ======= */
+  const q = id => document.getElementById(id);
+  const safeText = s => (typeof s === 'string' ? s.replace(/[\u0000-\u001F\u007F-\u009F]/g, '').trim() : '');
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-for(let i=0;i<12;i++){
-  const e=document.createElement("div");
-  e.className="emoji";
-  e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-  e.style.left=Math.random()*100+"vw";
-  e.style.top=Math.random()*100+"vh";
-  e.style.animationDuration=15+Math.random()*10+"s";
-  layer.appendChild(e);
-  items.push(e);
-}
-
-pauseBtn.onclick=()=>{
-  paused=!paused;
-  items.forEach(e=>e.style.animationPlayState=paused?"paused":"running");
-  pauseBtn.textContent=paused?"Resume Emojis":"Pause Emojis";
-};
-
-/* Launch */
-launchBtn.onclick=()=>{
-  const w=window.open("about:blank","_blank");
-  w.document.write(`<iframe src="https://definitelynotabypass.pages.dev/" style="width:100%;height:100%;border:none;background:black"></iframe>`);
-};
-
-/* GitHub */
-githubBtn.onclick=()=>{
-  window.open("https://github.com/code-andrewy","_blank");
-};
-
-/* Holidays */
-(()=>{
-  const el=document.getElementById("holidayLine");
-  const d=new Date(),m=d.getMonth(),day=d.getDate(),y=d.getFullYear();
-  let msg="";
-  if(m===0&&day===1)msg="Happy New Year 🎉 from Jumpman64";
-  else if(m===1&&day===14)msg="Happy Valentine’s Day ❤️ from Jumpman64";
-  else if(m===2&&day===17)msg="Happy St. Patrick’s Day 🍀 from Jumpman64";
-  else if(m===6&&day===4)msg="Happy 4th of July 🇺🇸 from Jumpman64";
-  else if(m===9&&day===31)msg="Happy Halloween 🎃 from Jumpman64";
-  else if(m===11&&day===25)msg="Merry Christmas 🎅🌲 from Jumpman64";
-
-  if(m===10){
-    const f=new Date(y,10,1).getDay();
-    const t=22+((11-f)%7);
-    if(day===t)msg="Happy Thanksgiving 🦃 from Jumpman64";
+  // Sanitize URL: only allow http(s) and disallow data:, javascript:, blob:
+  function sanitizeUrl(raw) {
+    try {
+      const u = new URL(raw);
+      if (u.protocol !== 'http:' && u.protocol !== 'https:') return null;
+      return u.href;
+    } catch {
+      return null;
+    }
   }
 
-  el.textContent=msg;
+  /* ======= Typewriter with safe fetch + timeout ======= */
+  (function typewriterModule() {
+    const typeEl = q('typewriter');
+    if (!typeEl) return;
+
+    async function fetchFact(timeoutMs = 3000) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const res = await fetch('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en', { signal: controller.signal });
+        clearTimeout(id);
+        if (!res.ok) throw new Error('bad response');
+        const j = await res.json();
+        const txt = safeText(j?.text || '');
+        // limit length to avoid extremely long strings
+        return txt.substring(0, 300) || 'Welcome back.';
+      } catch {
+        clearTimeout(id);
+        return 'Welcome back.';
+      }
+    }
+
+    let stopped = false;
+    async function startTyping() {
+      if (stopped) return;
+      const text = await fetchFact();
+      typeEl.textContent = '';
+      let i = 0;
+      const interval = 30;
+      const maxLen = Math.min(text.length, 300);
+
+      return new Promise(resolve => {
+        const t = setInterval(() => {
+          if (i < maxLen) {
+            typeEl.textContent += text[i++];
+          } else {
+            clearInterval(t);
+            // wait a bit then restart
+            setTimeout(() => { if (!stopped) startTyping(); resolve(); }, 5000);
+          }
+        }, interval);
+      });
+    }
+
+    // Start once
+    startTyping();
+
+    // expose a safe stop if needed (not used here)
+    window.__typewriterStop = () => { stopped = true; };
+  })();
+
+  /* ======= Emoji layer ======= */
+  (function emojiModule() {
+    const layer = q('emoji-layer');
+    if (!layer) return;
+
+    // Minor styles to ensure layer doesn't capture input (you can move to CSS)
+    layer.style.pointerEvents = 'none';
+    layer.style.position = layer.style.position || 'fixed';
+    layer.style.left = layer.style.left || '0';
+    layer.style.top = layer.style.top || '0';
+    layer.style.width = layer.style.width || '100%';
+    layer.style.height = layer.style.height || '100%';
+    layer.style.overflow = 'hidden';
+
+    const emojis = ['🎮', '🚀', '👾', '💫', '🕹️'];
+    const items = [];
+    const MAX = 24; // cap
+    const baseDuration = 18;
+
+    // create with guards (avoid duplicate creation)
+    const existing = layer.querySelectorAll('.emoji');
+    if (existing.length === 0) {
+      const count = clamp(Math.round((window.innerWidth / 120) * 2), 6, MAX);
+      for (let i = 0; i < count; i++) {
+        const e = document.createElement('div');
+        e.className = 'emoji';
+        e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        // use transform translate to avoid layout shift
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        e.style.position = 'absolute';
+        e.style.left = left + 'vw';
+        e.style.top = top + 'vh';
+        e.style.fontSize = (12 + Math.random() * 28) + 'px';
+        e.style.opacity = (0.3 + Math.random() * 0.7).toString();
+        e.style.willChange = 'transform, opacity';
+        e.style.animation = `emojiFloat ${baseDuration + Math.random() * 10}s linear infinite`;
+        // keep them non-interactive
+        e.style.pointerEvents = 'none';
+        layer.appendChild(e);
+        items.push(e);
+      }
+    } else {
+      existing.forEach(n => items.push(n));
+    }
+
+    // pause/resume button
+    const pauseBtn = q('pauseBtn');
+    let paused = false;
+    if (pauseBtn) {
+      pauseBtn.setAttribute('aria-pressed', 'false');
+      pauseBtn.addEventListener('click', () => {
+        paused = !paused;
+        items.forEach(e => e.style.animationPlayState = paused ? 'paused' : 'running');
+        pauseBtn.textContent = paused ? 'Resume Emojis' : 'Pause Emojis';
+        pauseBtn.setAttribute('aria-pressed', String(paused));
+      });
+    }
+
+    // create a small CSS keyframes if not present
+    if (![...document.styleSheets].some(s => (s.ownerNode && s.ownerNode.id === 'emoji-floats'))) {
+      const style = document.createElement('style');
+      style.id = 'emoji-floats';
+      style.textContent = `
+        @keyframes emojiFloat {
+          0% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-12px) rotate(10deg); }
+          100% { transform: translateY(0) rotate(0deg); }
+        }
+        .emoji { user-select: none; -webkit-user-select:none; display:block; }
+      `;
+      document.head.appendChild(style);
+    }
+  })();
+
+  /* ======= Safe Launch (open sandboxed iframe in new window) ======= */
+  (function launchModule() {
+    const btn = q('launchBtn');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      // change this to the URL you want to open; sanitize it first
+      const rawUrl = 'https://definitelynotabypass.pages.dev/';
+      const url = sanitizeUrl(rawUrl);
+      if (!url) {
+        console.warn('launch blocked: invalid URL');
+        return;
+      }
+
+      // attempt to open a new blank window
+      const w = window.open('about:blank', '_blank');
+      if (!w) {
+        alert('Unable to open window (popup blocked).');
+        return;
+      }
+
+      try {
+        // deny opener access
+        try { w.opener = null; } catch (e) { /* ignore on some browsers */ }
+
+        // write a minimal page that contains a sandboxed iframe
+        const doc = w.document;
+        const safeHtml = `
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Launch</title>
+  <style>html,body{height:100%;margin:0;background:#000}iframe{width:100%;height:100%;border:0}</style>
+</head>
+<body>
+  <iframe src="${url}" sandbox="allow-scripts allow-forms"></iframe>
+</body>
+</html>`;
+        // write and close
+        doc.open();
+        doc.write(safeHtml);
+        doc.close();
+      } catch (err) {
+        console.error('launch failed', err);
+        try { w.close(); } catch {}
+        alert('Failed to open sandboxed window.');
+      }
+    });
+  })();
+
+  /* ======= GitHub Button (safe popup) ======= */
+  (function githubModule() {
+    const btn = q('githubBtn');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const url = sanitizeUrl('https://github.com/code-andrewy');
+      if (!url) return;
+      const w = window.open(url, '_blank');
+      if (w) {
+        try { w.opener = null; } catch {}
+      } else {
+        alert('Unable to open GitHub (popup blocked).');
+      }
+    });
+  })();
+
+  /* ======= Holidays — show for the whole month (easy to extend) ======= */
+  (function holidayModule() {
+    const el = q('holidayLine');
+    if (!el) return;
+    const d = new Date();
+    const m = d.getMonth(); // 0-11
+    const map = {
+      0: 'Happy New Year 🎉 from Jumpman64',
+      1: 'Happy Valentine’s Month ❤️ from Jumpman64',
+      2: 'Happy St. Patrick’s Month 🍀 from Jumpman64',
+      6: 'Happy 4th of July Month 🇺🇸 from Jumpman64',
+      9: 'Happy Halloween Month 🎃 from Jumpman64',
+      10: 'Happy Thanksgiving Month 🦃 from Jumpman64',
+      11: 'Merry Christmas Month 🎅🌲 from Jumpman64'
+    };
+    const msg = map.hasOwnProperty(m) ? map[m] : '';
+    el.textContent = msg;
+    // add aria if visible
+    if (msg) el.setAttribute('role', 'status');
+  })();
+
+  /* ======= Defensive: make buttons keyboard-friendly if present ======= */
+  (function accessibility() {
+    ['launchBtn', 'pauseBtn', 'githubBtn'].forEach(id => {
+      const el = q(id);
+      if (!el) return;
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+      el.style.cursor = 'pointer';
+      el.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          el.click();
+        }
+      });
+    });
+  })();
+
+  /* ======= End ======= */
 })();
 </script>
 
