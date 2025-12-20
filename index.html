@@ -21,8 +21,14 @@
   --blur:12px;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
+/* PAGE */
 html,body{
   height:100%;
   font-family:"Outfit",sans-serif;
@@ -33,14 +39,14 @@ html,body{
   color:var(--text);
 }
 
-/* CENTER THE UI */
+/* CENTER UI */
 body{
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-/* Floating emojis */
+/* FLOATING EMOJIS */
 #emoji-layer{
   position:fixed;
   inset:0;
@@ -61,7 +67,7 @@ body{
   100%{transform:translate(0,0)}
 }
 
-/* Card */
+/* MAIN CARD */
 .panel{
   position:relative;
   z-index:1;
@@ -76,24 +82,26 @@ body{
   text-align:center;
 }
 
-/* Header */
+/* HEADER BADGE */
 .badge{
   display:inline-block;
   padding:5px 12px;
   border-radius:999px;
   font-size:.8rem;
-  font-weight:700;
+  font-weight:800;
   background:linear-gradient(135deg,var(--accent),#7b7bff);
   color:#000;
   margin-bottom:10px;
 }
 
+/* TITLE */
 .title{
   font-size:clamp(1.8rem,3.5vw,2.3rem);
-  font-weight:800;
+  font-weight:900;
   margin-bottom:8px;
 }
 
+/* SUB BADGES */
 .sub-badges{
   display:flex;
   gap:8px;
@@ -102,29 +110,35 @@ body{
   margin-bottom:10px;
 }
 
+/* DEFAULT PILL */
 .pill{
   background:#ffffff08;
   border:1px solid var(--border);
-  padding:6px 12px;
+  padding:6px 14px;
   border-radius:999px;
   font-size:.85rem;
+  font-weight:600;
   color:var(--muted);
+  backdrop-filter:blur(6px);
 }
 
+/* HOLIDAY PILL */
+.holiday-pill{
+  background:linear-gradient(135deg,#00ffe033,#7b7bff33);
+  border:1px solid #00ffe088;
+  color:var(--accent);
+  font-weight:800;
+  box-shadow:0 0 14px #00ffe033;
+}
+
+/* SUBTITLE / TYPEWRITER */
 .subtitle{
   color:var(--muted);
   font-size:.95rem;
   min-height:1.4em;
 }
 
-.holiday{
-  margin-top:6px;
-  font-weight:700;
-  color:var(--accent);
-  min-height:1.2em;
-}
-
-/* Buttons */
+/* BUTTON GRID */
 .actions{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -132,6 +146,7 @@ body{
   margin-top:22px;
 }
 
+/* BUTTON */
 .btn{
   padding:16px 14px;
   border-radius:16px;
@@ -155,7 +170,7 @@ body{
 
 .btn-title{
   font-size:1rem;
-  font-weight:700;
+  font-weight:800;
 }
 
 .btn-desc{
@@ -165,7 +180,7 @@ body{
   line-height:1.2;
 }
 
-/* Controls */
+/* CONTROLS */
 .controls{
   margin-top:18px;
 }
@@ -177,6 +192,11 @@ body{
   padding:8px 16px;
   border-radius:999px;
   cursor:pointer;
+  transition:.2s;
+}
+
+.toggle:hover{
+  background:#ffffff10;
 }
 </style>
 </head>
