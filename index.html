@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Google Classroom</title>
+<title>Portal</title>
 
 <link rel="icon" href="https://raw.githubusercontent.com/code-andrewy/Games1232/main/image-removebg-preview%20(32).png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,6 @@
   --accent:#00ffe0;
   --text:#fff;
   --muted:#b8b8d0;
-  --radius:16px;
   --blur:12px;
 }
 
@@ -32,7 +31,13 @@ html,body{
     radial-gradient(circle at 80% 80%, #0f3d3d 0%, transparent 45%),
     linear-gradient(180deg,var(--bg1),var(--bg2));
   color:var(--text);
-  overflow:hidden;
+}
+
+/* CENTER THE UI */
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 /* Floating emojis */
@@ -56,55 +61,54 @@ html,body{
   100%{transform:translate(0,0)}
 }
 
-/* Layout */
-.app{
+/* Card */
+.panel{
   position:relative;
   z-index:1;
-  min-height:100vh;          /* full viewport height */
-  display:grid;
-  place-items:center;        /* perfect horizontal + vertical centering */
-  padding:14px;
-}
-
-.panel{
   width:100%;
   max-width:720px;
   background:var(--card);
   backdrop-filter:blur(var(--blur));
   border:1px solid var(--border);
   border-radius:22px;
-  padding:22px;
+  padding:26px;
   box-shadow:0 30px 70px #000000aa;
-  animation:fadeIn .7s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(14px) scale(.97)}
-  to{opacity:1;transform:none}
-}
-
-/* Header */
-.header{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  margin-bottom:16px;
   text-align:center;
 }
 
+/* Header */
 .badge{
-  align-self:center;
+  display:inline-block;
   padding:5px 12px;
   border-radius:999px;
   font-size:.8rem;
-  font-weight:600;
+  font-weight:700;
   background:linear-gradient(135deg,var(--accent),#7b7bff);
   color:#000;
+  margin-bottom:10px;
 }
 
 .title{
-  font-size:clamp(1.5rem,3.5vw,2.2rem);
+  font-size:clamp(1.8rem,3.5vw,2.3rem);
   font-weight:800;
+  margin-bottom:8px;
+}
+
+.sub-badges{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+
+.pill{
+  background:#ffffff08;
+  border:1px solid var(--border);
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:.85rem;
+  color:var(--muted);
 }
 
 .subtitle{
@@ -113,69 +117,66 @@ html,body{
   min-height:1.4em;
 }
 
-/* Weather */
-.weather{
+.holiday{
   margin-top:6px;
-  font-size:.95rem;
+  font-weight:700;
   color:var(--accent);
+  min-height:1.2em;
 }
-
-.weather i{margin-right:6px}
 
 /* Buttons */
 .actions{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:10px;
-  margin-top:18px;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:14px;
+  margin-top:22px;
 }
 
 .btn{
-  padding:12px;
-  border-radius:14px;
+  padding:16px 14px;
+  border-radius:16px;
   border:1px solid var(--border);
-  background:linear-gradient(180deg,#ffffff10,#ffffff03);
+  background:linear-gradient(180deg,#ffffff12,#ffffff04);
   color:var(--text);
-  font-weight:600;
   cursor:pointer;
   transition:.25s cubic-bezier(.2,.8,.2,1);
-  text-align:center;
-  text-decoration:none;
-}
-
-.btn i{
-  display:block;
-  margin-bottom:4px;
-  font-size:1.3rem;
-  color:var(--accent);
 }
 
 .btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 14px 28px #00000088;
+  transform:translateY(-4px);
+  box-shadow:0 16px 30px #00000099;
+}
+
+.btn i{
+  font-size:1.6rem;
+  color:var(--accent);
+  margin-bottom:6px;
+}
+
+.btn-title{
+  font-size:1rem;
+  font-weight:700;
+}
+
+.btn-desc{
+  font-size:.8rem;
+  color:var(--muted);
+  margin-top:4px;
+  line-height:1.2;
 }
 
 /* Controls */
 .controls{
-  margin-top:16px;
-  display:flex;
-  justify-content:flex-end;
+  margin-top:18px;
 }
 
 .toggle{
   background:none;
   border:1px solid var(--border);
   color:var(--text);
-  padding:7px 14px;
+  padding:8px 16px;
   border-radius:999px;
-  font-size:.85rem;
   cursor:pointer;
-}
-
-.toggle:hover{background:#ffffff10}
-
-@media(max-width:520px){
-  .controls{justify-content:center}
 }
 </style>
 </head>
@@ -184,83 +185,72 @@ html,body{
 
 <div id="emoji-layer"></div>
 
-<div class="app">
-  <div class="panel">
+<div class="panel">
 
-    <div class="header">
-      <div class="badge">Portal v3.0</div>
-      <div class="title"><i class="fas fa-rocket"></i> Portal</div>
-      <div class="subtitle" id="typewriter"></div>
-      <div class="weather">
-        <i id="weatherIcon" class="fas fa-cloud"></i>
-        <span id="weatherText">Loading weather...</span>
-      </div>
-    </div>
+  <div class="badge">Portal v3.0</div>
+  <div class="title">🚀 Portal</div>
 
-    <div class="actions">
-      <button class="btn" id="launchBtn">
-        <i class="fas fa-play"></i>
-        Launch Jumpman64
-      </button>
-
-      <a class="btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">
-        <i class="fas fa-bug"></i>
-        Bug Report
-      </a>
-
-      <button class="btn" id="githubBtn">
-        <i class="fab fa-github"></i>
-        Our App
-      </button>
-    </div>
-
-    <div class="controls">
-      <button class="toggle" id="pauseBtn">
-        <i class="fas fa-pause"></i> Pause Emojis
-      </button>
-    </div>
-
+  <div class="sub-badges">
+    <div class="pill">#1 for gaming website in NH</div>
+    <div class="pill">Mathematically proven to make your day better</div>
   </div>
+
+  <div class="subtitle" id="typewriter"></div>
+  <div class="holiday" id="holidayLine"></div>
+
+  <div class="actions">
+    <button class="btn" id="launchBtn">
+      <i class="fas fa-play"></i>
+      <div class="btn-title">Launch Jumpman64</div>
+      <div class="btn-desc">Start the game instantly in a new window</div>
+    </button>
+
+    <a class="btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">
+      <i class="fas fa-bug"></i>
+      <div class="btn-title">Bug Report</div>
+      <div class="btn-desc">Report issues or suggest improvements</div>
+    </a>
+
+    <button class="btn" id="githubBtn">
+      <i class="fab fa-github"></i>
+      <div class="btn-title">Our App</div>
+      <div class="btn-desc">Open the Jumpman64 web application</div>
+    </button>
+  </div>
+
+  <div class="controls">
+    <button class="toggle" id="pauseBtn">Pause Emojis</button>
+  </div>
+
 </div>
 
 <script>
-/* -------- Typewriter -------- */
+/* Typewriter */
 const typeEl=document.getElementById("typewriter");
-let typing=false;
-
 async function fetchFact(){
   try{
     const r=await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
     const j=await r.json();
     return j.text;
-  }catch{
-    return "Welcome back.";
-  }
+  }catch{return"Welcome back."}
 }
-
 async function startTyping(){
-  if(typing) return;
-  typing=true;
-  const text=await fetchFact();
+  const t=await fetchFact();
   typeEl.textContent="";
   let i=0;
-  const t=setInterval(()=>{
-    typeEl.textContent+=text[i++];
-    if(i>=text.length){
-      clearInterval(t);
-      typing=false;
-      setTimeout(startTyping,5000);
-    }
+  const s=setInterval(()=>{
+    if(i<t.length) typeEl.textContent+=t[i++];
+    else{clearInterval(s);setTimeout(startTyping,5000);}
   },30);
 }
 startTyping();
 
-/* -------- Emoji background -------- */
-const emojis=["🎮","🚀","💫","👾","🕹️"];
+/* Emojis */
+const emojis=["🎮","🚀","👾","💫","🕹️"];
 const layer=document.getElementById("emoji-layer");
-let paused=document.cookie.includes("emojiPaused=1");
-
 const items=[];
+let paused=false;
+
 for(let i=0;i<12;i++){
   const e=document.createElement("div");
   e.className="emoji";
@@ -272,73 +262,43 @@ for(let i=0;i<12;i++){
   items.push(e);
 }
 
-function setPaused(p){
-  paused=p;
-  document.cookie=`emojiPaused=${p?1:0};path=/;max-age=2592000`;
-  items.forEach(e=>e.style.animationPlayState=p?"paused":"running");
-  pauseBtn.innerHTML=p
-    ?'<i class="fas fa-play"></i> Resume Emojis'
-    :'<i class="fas fa-pause"></i> Pause Emojis';
-}
-setPaused(paused);
-
-pauseBtn.onclick=()=>setPaused(!paused);
-
-/* -------- Launchers -------- */
-function launchJumpman(){
-  const w=window.open("about:blank","_blank");
-  if(!w) return alert("Popup blocked");
-  w.document.write(`
-    <html><head><title>Jumpman64</title>
-    <style>html,body{margin:0;height:100%;background:#000}iframe{width:100%;height:100%;border:none}</style>
-    </head><body>
-    <iframe src="https://definitelynotabypass.pages.dev/"></iframe>
-    </body></html>
-  `);
-  w.document.close();
-}
-launchBtn.onclick=launchJumpman;
-
-githubBtn.onclick=()=>{
-  const w=window.open("about:blank","_blank");
-  if(!w) return alert("Popup blocked");
-  fetch("https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html")
-    .then(r=>r.text())
-    .then(t=>{w.document.write(t);w.document.close()})
-    .catch(()=>w.document.write("<h2>Failed to load app</h2>"));
+pauseBtn.onclick=()=>{
+  paused=!paused;
+  items.forEach(e=>e.style.animationPlayState=paused?"paused":"running");
+  pauseBtn.textContent=paused?"Resume Emojis":"Pause Emojis";
 };
 
-/* -------- Keyboard shortcut -------- */
-document.addEventListener("keydown",e=>{
-  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="j"){
-    e.preventDefault();
-    launchJumpman();
-  }
-});
+/* Launch */
+launchBtn.onclick=()=>{
+  const w=window.open("about:blank","_blank");
+  w.document.write(`<iframe src="https://definitelynotabypass.pages.dev/" style="width:100%;height:100%;border:none;background:black"></iframe>`);
+};
 
-/* -------- Weather -------- */
-const weatherText=document.getElementById("weatherText");
-const weatherIcon=document.getElementById("weatherIcon");
+/* GitHub */
+githubBtn.onclick=()=>{
+  window.open("https://github.com/code-andrewy","_blank");
+};
 
-async function loadWeather(){
-  try{
-    const p=await (await fetch("https://api.weather.gov/points/43.1468,-71.5852")).json();
-    const f=await (await fetch(p.properties.forecast)).json();
-    const d=f.properties.periods[0];
-    weatherText.textContent=`${d.temperature}°${d.temperatureUnit} — ${d.shortForecast}`;
-    const s=d.shortForecast.toLowerCase();
-    weatherIcon.className =
-      s.includes("sun")?"fas fa-sun":
-      s.includes("rain")?"fas fa-cloud-showers-heavy":
-      s.includes("snow")?"fas fa-snowflake":
-      s.includes("storm")?"fas fa-bolt":
-      "fas fa-cloud";
-  }catch{
-    weatherText.textContent="Weather unavailable";
+/* Holidays */
+(()=>{
+  const el=document.getElementById("holidayLine");
+  const d=new Date(),m=d.getMonth(),day=d.getDate(),y=d.getFullYear();
+  let msg="";
+  if(m===0&&day===1)msg="Happy New Year 🎉";
+  else if(m===1&&day===14)msg="Happy Valentine’s Day ❤️";
+  else if(m===2&&day===17)msg="Happy St. Patrick’s Day 🍀";
+  else if(m===6&&day===4)msg="Happy 4th of July 🇺🇸";
+  else if(m===9&&day===31)msg="Happy Halloween 🎃";
+  else if(m===11&&day===25)msg="Merry Christmas 🎅🌲";
+
+  if(m===10){
+    const f=new Date(y,10,1).getDay();
+    const t=22+((11-f)%7);
+    if(day===t)msg="Happy Thanksgiving 🦃";
   }
-}
-loadWeather();
-setInterval(loadWeather,300000);
+
+  el.textContent=msg;
+})();
 </script>
 
 </body>
