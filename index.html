@@ -284,17 +284,17 @@ githubBtn.onclick=()=>{
   const el=document.getElementById("holidayLine");
   const d=new Date(),m=d.getMonth(),day=d.getDate(),y=d.getFullYear();
   let msg="";
-  if(m===0&&day===1)msg="Happy New Year 🎉";
-  else if(m===1&&day===14)msg="Happy Valentine’s Day ❤️";
-  else if(m===2&&day===17)msg="Happy St. Patrick’s Day 🍀";
-  else if(m===6&&day===4)msg="Happy 4th of July 🇺🇸";
-  else if(m===9&&day===31)msg="Happy Halloween 🎃";
-  else if(m===11&&day===25)msg="Merry Christmas 🎅🌲";
+  if(m===0&&day===1)msg="Happy New Year 🎉 from Jumpman64";
+  else if(m===1&&day===14)msg="Happy Valentine’s Day ❤️ from Jumpman64";
+  else if(m===2&&day===17)msg="Happy St. Patrick’s Day 🍀 from Jumpman64";
+  else if(m===6&&day===4)msg="Happy 4th of July 🇺🇸 from Jumpman64";
+  else if(m===9&&day===31)msg="Happy Halloween 🎃 from Jumpman64";
+  else if(m===11&&day===25)msg="Merry Christmas 🎅🌲 from Jumpman64";
 
   if(m===10){
     const f=new Date(y,10,1).getDay();
     const t=22+((11-f)%7);
-    if(day===t)msg="Happy Thanksgiving 🦃";
+    if(day===t)msg="Happy Thanksgiving 🦃 from Jumpman64";
   }
 
   el.textContent=msg;
