@@ -3,191 +3,344 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Google classroom </title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Google Classroom</title>
+
 <link rel="icon" href="https://raw.githubusercontent.com/code-andrewy/Games1232/main/image-removebg-preview%20(32).png">
-<!-- Cloudflare Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
-:root{--glow:#00ffe0;--text-muted:#cfcfcf;--card-bg:rgba(255,255,255,0.07);--banner-bg:rgba(255,255,255,0.05);--shadow:rgba(0,255,224,0.3)}
+:root{
+  --bg1:#06080f;
+  --bg2:#0b1020;
+  --card:#0f1428cc;
+  --border:#ffffff18;
+  --accent:#00ffe0;
+  --text:#fff;
+  --muted:#b8b8d0;
+  --radius:16px;
+  --blur:12px;
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;background:radial-gradient(circle at 20% 20%,#1b2735 0%,#090a0f 100%);color:#fff;font-family:'Outfit',sans-serif;display:flex;justify-content:center;align-items:center}
-.container{width:100%;height:100%;padding:3vh 3vw;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2vh;position:relative;text-align:center;z-index:1}
-.banner{background:var(--banner-bg);border:1px solid rgba(255,255,255,0.15);border-radius:2vw;padding:1rem 2.5rem;color:var(--glow);font-weight:600;font-size:1rem;text-shadow:0 0 10px var(--shadow);box-shadow:0 0 15px var(--shadow);animation:pulse 3s infinite ease-in-out}
-@keyframes pulse{0%,100%{box-shadow:0 0 10px var(--shadow)}50%{box-shadow:0 0 25px rgba(0,255,224,0.5)}}
-.card{background:var(--card-bg);border:1px solid rgba(255,255,255,0.12);border-radius:1.5vw;padding:3vh 4vw;backdrop-filter:blur(10px);max-width:650px;width:90%;box-shadow:0 0 25px rgba(0,255,224,0.15);transition:all 0.3s}
-.card:hover{transform:scale(1.02);box-shadow:0 0 35px rgba(0,255,224,0.3)}
-h1{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:0.6rem}
-.typing-text{color:var(--text-muted);min-height:2.2em;font-size:1.05rem;margin:1rem 0}
-.glow-btn{margin-top:1.5rem;background:rgba(0,255,224,0.1);border:1px solid var(--glow);border-radius:2vw;color:var(--glow);font-weight:600;font-size:1.1rem;padding:.8rem 2rem;cursor:pointer;box-shadow:0 0 15px var(--shadow);transition:.3s;display:inline-block;text-decoration:none}
-.glow-btn i{margin-right:.5rem}
-.glow-btn:hover{background:rgba(0,255,224,0.2);box-shadow:0 0 25px rgba(0,255,224,0.5);transform:scale(1.05)}
-#pauseBtn{position:fixed;top:1rem;right:1rem;border:1px solid var(--glow);color:var(--glow);background:rgba(0,255,224,0.08);border-radius:8px;font-weight:600;padding:.5rem 1rem;cursor:pointer;z-index:10;transition:.3s}
-#pauseBtn:hover{background:rgba(0,255,224,0.18);transform:scale(1.05)}
-#emoji-background{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.emoji{position:absolute;font-size:1.5rem;animation:float linear infinite;opacity:.7}
-@keyframes float{0%{transform:translate(0,0)}25%{transform:translate(5vw,3vh)}50%{transform:translate(-4vw,5vh)}75%{transform:translate(3vw,-3vh)}100%{transform:translate(0,0)}}
-.weather{margin-top:1rem;font-size:1.2rem}
-.weather i{margin-right:.5rem}
-@media(max-width:600px){.card{padding:2rem 1.5rem}.banner{font-size:.9rem;padding:.8rem 1.5rem}}
+
+html,body{
+  height:100%;
+  font-family:"Outfit",sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%, #1b2350 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, #0f3d3d 0%, transparent 45%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  overflow:hidden;
+}
+
+/* Floating emojis */
+#emoji-layer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+.emoji{
+  position:absolute;
+  font-size:clamp(18px,2.5vw,30px);
+  opacity:.6;
+  animation:float 18s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translate(0,0)}
+  50%{transform:translate(4vw,-5vh)}
+  100%{transform:translate(0,0)}
+}
+
+/* Layout */
+.app{
+  position:relative;
+  z-index:1;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+}
+
+.panel{
+  width:100%;
+  max-width:720px;
+  background:var(--card);
+  backdrop-filter:blur(var(--blur));
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 30px 70px #000000aa;
+  animation:fadeIn .7s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(14px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+
+/* Header */
+.header{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:16px;
+  text-align:center;
+}
+
+.badge{
+  align-self:center;
+  padding:5px 12px;
+  border-radius:999px;
+  font-size:.8rem;
+  font-weight:600;
+  background:linear-gradient(135deg,var(--accent),#7b7bff);
+  color:#000;
+}
+
+.title{
+  font-size:clamp(1.5rem,3.5vw,2.2rem);
+  font-weight:800;
+}
+
+.subtitle{
+  color:var(--muted);
+  font-size:.95rem;
+  min-height:1.4em;
+}
+
+/* Weather */
+.weather{
+  margin-top:6px;
+  font-size:.95rem;
+  color:var(--accent);
+}
+
+.weather i{margin-right:6px}
+
+/* Buttons */
+.actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin-top:18px;
+}
+
+.btn{
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg,#ffffff10,#ffffff03);
+  color:var(--text);
+  font-weight:600;
+  cursor:pointer;
+  transition:.25s cubic-bezier(.2,.8,.2,1);
+  text-align:center;
+  text-decoration:none;
+}
+
+.btn i{
+  display:block;
+  margin-bottom:4px;
+  font-size:1.3rem;
+  color:var(--accent);
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 28px #00000088;
+}
+
+/* Controls */
+.controls{
+  margin-top:16px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.toggle{
+  background:none;
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:7px 14px;
+  border-radius:999px;
+  font-size:.85rem;
+  cursor:pointer;
+}
+
+.toggle:hover{background:#ffffff10}
+
+@media(max-width:520px){
+  .controls{justify-content:center}
+}
 </style>
 </head>
+
 <body>
-<button id="pauseBtn"><i class="fas fa-pause"></i> Pause emojis</button>
-<div id="emoji-background"></div>
-<div class="container">
-    <div class="banner"><i class="fas fa-cheese"></i> Thoughts on cheese related products 🧀</div>
-    <div class="card">
-        <h1><i class="fas fa-rocket"></i> Portal🚀 (3.0)</h1>
-        <div class="typing-text" id="typewriter">Loading fact...</div>
-        <div class="weather"><i id="weatherEmoji" class="fas fa-cloud"></i> <span id="weatherText">Loading weather...</span></div>
-        <a class="glow-btn" id="launchBtn"><i class="fas fa-play"></i> Launch jumpman64</a>
-        <a class="glow-btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank"><i class="fas fa-bug"></i> Bug Report</a>
-        <a class="glow-btn" id="githubBtn"><i class="fab fa-github"></i> Our app</a>
+
+<div id="emoji-layer"></div>
+
+<div class="app">
+  <div class="panel">
+
+    <div class="header">
+      <div class="badge">Portal v3.0</div>
+      <div class="title"><i class="fas fa-rocket"></i> Portal</div>
+      <div class="subtitle" id="typewriter"></div>
+      <div class="weather">
+        <i id="weatherIcon" class="fas fa-cloud"></i>
+        <span id="weatherText">Loading weather...</span>
+      </div>
     </div>
+
+    <div class="actions">
+      <button class="btn" id="launchBtn">
+        <i class="fas fa-play"></i>
+        Launch Jumpman64
+      </button>
+
+      <a class="btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">
+        <i class="fas fa-bug"></i>
+        Bug Report
+      </a>
+
+      <button class="btn" id="githubBtn">
+        <i class="fab fa-github"></i>
+        Our App
+      </button>
+    </div>
+
+    <div class="controls">
+      <button class="toggle" id="pauseBtn">
+        <i class="fas fa-pause"></i> Pause Emojis
+      </button>
+    </div>
+
+  </div>
 </div>
 
 <script>
-// --- Typewriter ---
-const typeEl = document.getElementById("typewriter");
-const speed = 35;
-const pause = 5000;
+/* -------- Typewriter -------- */
+const typeEl=document.getElementById("typewriter");
+let typing=false;
 
-async function fetchFact() {
-    try {
-        const r = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
-        const data = await r.json();
-        return data.text;
-    } catch {
-        return "Couldn't load fact.";
+async function fetchFact(){
+  try{
+    const r=await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
+    const j=await r.json();
+    return j.text;
+  }catch{
+    return "Welcome back.";
+  }
+}
+
+async function startTyping(){
+  if(typing) return;
+  typing=true;
+  const text=await fetchFact();
+  typeEl.textContent="";
+  let i=0;
+  const t=setInterval(()=>{
+    typeEl.textContent+=text[i++];
+    if(i>=text.length){
+      clearInterval(t);
+      typing=false;
+      setTimeout(startTyping,5000);
     }
+  },30);
 }
-
-async function startTyping() {
-    const t = await fetchFact();
-    typeEl.textContent = "";
-    typeText(t);
-}
-
-function typeText(text, i = 0) {
-    if (i < text.length) {
-        typeEl.textContent += text[i];
-        setTimeout(() => typeText(text, i + 1), speed);
-    } else {
-        setTimeout(startTyping, pause);
-    }
-}
-
 startTyping();
 
-// --- Emoji Background with Cookie Save ---
-const emojis = ["🎮","🚀","💫","👾","🕹️"];
-const bg = document.getElementById("emoji-background");
+/* -------- Emoji background -------- */
+const emojis=["🎮","🚀","💫","👾","🕹️"];
+const layer=document.getElementById("emoji-layer");
+let paused=document.cookie.includes("emojiPaused=1");
 
-// Create emojis
-for (let i = 0; i < 10; i++) {
-    const e = document.createElement("div");
-    e.className = "emoji";
-    e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    e.style.left = Math.random() * 100 + "%";
-    e.style.top = Math.random() * 100 + "%";
-    e.style.animationDuration = 15 + Math.random() * 10 + "s";
-    e.style.fontSize = 1 + Math.random() * 1.5 + "rem";
-    bg.appendChild(e);
+const items=[];
+for(let i=0;i<12;i++){
+  const e=document.createElement("div");
+  e.className="emoji";
+  e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.top=Math.random()*100+"vh";
+  e.style.animationDuration=15+Math.random()*10+"s";
+  layer.appendChild(e);
+  items.push(e);
 }
 
-// Helper functions for cookies
-function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+function setPaused(p){
+  paused=p;
+  document.cookie=`emojiPaused=${p?1:0};path=/;max-age=2592000`;
+  items.forEach(e=>e.style.animationPlayState=p?"paused":"running");
+  pauseBtn.innerHTML=p
+    ?'<i class="fas fa-play"></i> Resume Emojis'
+    :'<i class="fas fa-pause"></i> Pause Emojis';
 }
+setPaused(paused);
 
-function getCookie(name) {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
+pauseBtn.onclick=()=>setPaused(!paused);
+
+/* -------- Launchers -------- */
+function launchJumpman(){
+  const w=window.open("about:blank","_blank");
+  if(!w) return alert("Popup blocked");
+  w.document.write(`
+    <html><head><title>Jumpman64</title>
+    <style>html,body{margin:0;height:100%;background:#000}iframe{width:100%;height:100%;border:none}</style>
+    </head><body>
+    <iframe src="https://definitelynotabypass.pages.dev/"></iframe>
+    </body></html>
+  `);
+  w.document.close();
 }
+launchBtn.onclick=launchJumpman;
 
-// Pause/resume emojis
-const pauseBtn = document.getElementById("pauseBtn");
+githubBtn.onclick=()=>{
+  const w=window.open("about:blank","_blank");
+  if(!w) return alert("Popup blocked");
+  fetch("https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html")
+    .then(r=>r.text())
+    .then(t=>{w.document.write(t);w.document.close()})
+    .catch(()=>w.document.write("<h2>Failed to load app</h2>"));
+};
 
-function setEmojiState(paused) {
-    document.body.classList.toggle("paused", paused);
-    pauseBtn.innerHTML = paused ? "<i class='fas fa-play'></i> Resume emojis" : "<i class='fas fa-pause'></i> Pause emojis";
-    document.querySelectorAll(".emoji").forEach(e => e.style.animationPlayState = paused ? "paused" : "running");
-    setCookie("emojisPaused", paused ? "1" : "0", 30);
-}
-
-// Load initial state from cookie
-const initialPaused = getCookie("emojisPaused") === "1";
-setEmojiState(initialPaused);
-
-// Toggle on click
-pauseBtn.addEventListener("click", () => {
-    const paused = !document.body.classList.contains("paused");
-    setEmojiState(paused);
+/* -------- Keyboard shortcut -------- */
+document.addEventListener("keydown",e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="j"){
+    e.preventDefault();
+    launchJumpman();
+  }
 });
 
-// --- Launch buttons ---
-function launchJumpman() {
-    const w = window.open("about:blank", "_blank");
-    if (!w) return alert("Popup blocked.");
-    w.document.write(`<!DOCTYPE html><html><head><title>Jumpman64</title><style>html,body{margin:0;padding:0;height:100%;background:#0e0e0e}iframe{width:100%;height:100%;border:none}</style></head><body><iframe src="https://definitelynotabypass.pages.dev//"></iframe></body></html>`);
-    w.document.close();
+/* -------- Weather -------- */
+const weatherText=document.getElementById("weatherText");
+const weatherIcon=document.getElementById("weatherIcon");
+
+async function loadWeather(){
+  try{
+    const p=await (await fetch("https://api.weather.gov/points/43.1468,-71.5852")).json();
+    const f=await (await fetch(p.properties.forecast)).json();
+    const d=f.properties.periods[0];
+    weatherText.textContent=`${d.temperature}°${d.temperatureUnit} — ${d.shortForecast}`;
+    const s=d.shortForecast.toLowerCase();
+    weatherIcon.className =
+      s.includes("sun")?"fas fa-sun":
+      s.includes("rain")?"fas fa-cloud-showers-heavy":
+      s.includes("snow")?"fas fa-snowflake":
+      s.includes("storm")?"fas fa-bolt":
+      "fas fa-cloud";
+  }catch{
+    weatherText.textContent="Weather unavailable";
+  }
 }
-
-document.getElementById("launchBtn").addEventListener("click", launchJumpman);
-
-document.getElementById("githubBtn").addEventListener("click", () => {
-    const w = window.open("about:blank", "_blank");
-    if (!w) return alert("Popup blocked.");
-    fetch("https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html")
-        .then(r => r.text())
-        .then(h => { w.document.open(); w.document.write(h); w.document.close(); })
-        .catch(() => w.document.write("<h2>Failed to load app from GitHub 😢</h2>"));
-});
-
-// --- Keyboard Shortcut: Ctrl+J / Cmd+J ---
-document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'j') {
-        e.preventDefault();
-        launchJumpman();
-    }
-});
-
-// --- Weather for Pittsfield, NH ---
-const weatherText = document.getElementById("weatherText");
-const weatherEmoji = document.getElementById("weatherEmoji");
-
-async function getWeather(lat, lon) {
-    try {
-        const point = await (await fetch(`https://api.weather.gov/points/${lat},${lon}`)).json();
-        const forecast = await (await fetch(point.properties.forecast)).json();
-        const period = forecast.properties.periods[0];
-        const s = period.shortForecast.toLowerCase();
-
-        weatherText.textContent = `${period.temperature}°${period.temperatureUnit} — ${period.shortForecast}`;
-
-        if (s.includes("sunny") || s.includes("clear")) weatherEmoji.className = "fas fa-sun";
-        else if (s.includes("rain")) weatherEmoji.className = "fas fa-cloud-showers-heavy";
-        else if (s.includes("snow")) weatherEmoji.className = "fas fa-snowflake";
-        else if (s.includes("storm") || s.includes("thunder")) weatherEmoji.className = "fas fa-bolt";
-        else weatherEmoji.className = "fas fa-cloud";
-    } catch {
-        weatherText.textContent = "Weather unavailable 😕";
-        weatherEmoji.className = "fas fa-cloud";
-    }
-}
-
-// Fixed coordinates for Pittsfield, NH
-const defaultLat = 43.1468;
-const defaultLon = -71.5852;
-const defaultCity = "Pittsfield";
-const defaultState = "NH";
-
-weatherText.textContent = `${defaultCity}, ${defaultState} — Loading weather...`;
-getWeather(defaultLat, defaultLon);
-setInterval(() => getWeather(defaultLat, defaultLon), 300000); // refresh every 5 min
+loadWeather();
+setInterval(loadWeather,300000);
 </script>
+
 </body>
 </html>
