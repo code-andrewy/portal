@@ -1,347 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal</title>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="GH0pf8-OxYHd1O5f5RUUiqMaVgRwK-Gpqx9i1H-o1j0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal</title>
 
-<link rel="icon" href="https://raw.githubusercontent.com/code-andrewy/Games1232/main/image-removebg-preview%20(32).png">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="https://raw.githubusercontent.com/code-andrewy/Games1232/main/image-removebg-preview%20(32).png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<style>
-:root{
-  --bg1:#06080f;
-  --bg2:#0b1020;
-  --card:#0f1428cc;
-  --border:#ffffff18;
-  --accent:#00ffe0;
-  --text:#fff;
-  --muted:#b8b8d0;
-  --blur:12px;
-}
+    <style>
+        :root {
+            --bg1: #06080f;
+            --bg2: #0b1020;
+            --card: #0f1428cc;
+            --border: #ffffff18;
+            --accent: #00ffe0;
+            --text: #fff;
+            --muted: #b8b8d0;
+            --blur: 12px;
+        }
 
-/* RESET */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* PAGE */
-html,body{
-  height:100%;
-  font-family:"Outfit",sans-serif;
-  background:
-    radial-gradient(circle at 20% 10%, #1b2350 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, #0f3d3d 0%, transparent 45%),
-    linear-gradient(180deg,var(--bg1),var(--bg2));
-  color:var(--text);
-}
+        /* PAGE */
+        html,
+        body {
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            background:
+                radial-gradient(circle at 20% 10%, #1b2350 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, #0f3d3d 0%, transparent 45%),
+                linear-gradient(180deg, var(--bg1), var(--bg2));
+            color: var(--text);
+        }
 
-/* CENTER UI */
-body{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+        /* CENTER UI */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* FLOATING EMOJIS */
-#emoji-layer{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-}
+        /* FLOATING EMOJIS */
+        #emoji-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-.emoji{
-  position:absolute;
-  font-size:clamp(18px,2.5vw,30px);
-  opacity:.6;
-  animation:float 18s linear infinite;
-}
+        .emoji {
+            position: absolute;
+            font-size: clamp(18px, 2.5vw, 30px);
+            opacity: .6;
+            animation: float 18s linear infinite;
+        }
 
-@keyframes float{
-  0%{transform:translate(0,0)}
-  50%{transform:translate(4vw,-5vh)}
-  100%{transform:translate(0,0)}
-}
+        @keyframes float {
+            0% {
+                transform: translate(0, 0)
+            }
 
-/* MAIN CARD */
-.panel{
-  position:relative;
-  z-index:1;
-  width:100%;
-  max-width:720px;
-  background:var(--card);
-  backdrop-filter:blur(var(--blur));
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:26px;
-  box-shadow:0 30px 70px #000000aa;
-  text-align:center;
-}
+            50% {
+                transform: translate(4vw, -5vh)
+            }
 
-/* HEADER BADGE */
-.badge{
-  display:inline-block;
-  padding:5px 12px;
-  border-radius:999px;
-  font-size:.8rem;
-  font-weight:800;
-  background:linear-gradient(135deg,var(--accent),#7b7bff);
-  color:#000;
-  margin-bottom:10px;
-}
+            100% {
+                transform: translate(0, 0)
+            }
+        }
 
-/* TITLE */
-.title{
-  font-size:clamp(1.8rem,3.5vw,2.3rem);
-  font-weight:900;
-  margin-bottom:8px;
-}
+        /* MAIN CARD */
+        .panel {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 720px;
+            background: var(--card);
+            backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 26px;
+            box-shadow: 0 30px 70px #000000aa;
+            text-align: center;
+        }
 
-/* SUB BADGES */
-.sub-badges{
-  display:flex;
-  gap:8px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-bottom:10px;
-}
+        /* HEADER BADGE */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: .8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #7b7bff);
+            color: #000;
+            margin-bottom: 10px;
+        }
 
-/* DEFAULT PILL */
-.pill{
-  background:#ffffff08;
-  border:1px solid var(--border);
-  padding:6px 14px;
-  border-radius:999px;
-  font-size:.85rem;
-  font-weight:600;
-  color:var(--muted);
-  backdrop-filter:blur(6px);
-}
+        /* TITLE */
+        .title {
+            font-size: clamp(1.8rem, 3.5vw, 2.3rem);
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
 
-/* HOLIDAY PILL */
-.holiday-pill{
-  background:linear-gradient(135deg,#00ffe033,#7b7bff33);
-  border:1px solid #00ffe088;
-  color:var(--accent);
-  font-weight:800;
-  box-shadow:0 0 14px #00ffe033;
-}
+        /* SUB BADGES */
+        .sub-badges {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
 
-/* SUBTITLE / TYPEWRITER */
-.subtitle{
-  color:var(--muted);
-  font-size:.95rem;
-  min-height:1.4em;
-}
+        /* DEFAULT PILL */
+        .pill {
+            background: #ffffff08;
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--muted);
+            backdrop-filter: blur(6px);
+        }
 
-/* BUTTON GRID */
-.actions{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:14px;
-  margin-top:22px;
-}
+        /* HOLIDAY PILL */
+        .holiday-pill {
+            background: linear-gradient(135deg, #00ffe033, #7b7bff33);
+            border: 1px solid #00ffe088;
+            color: var(--accent);
+            font-weight: 800;
+            box-shadow: 0 0 14px #00ffe033;
+        }
 
-/* BUTTON */
-.btn{
-  padding:16px 14px;
-  border-radius:16px;
-  border:1px solid var(--border);
-  background:linear-gradient(180deg,#ffffff12,#ffffff04);
-  color:var(--text);
-  cursor:pointer;
-  transition:.25s cubic-bezier(.2,.8,.2,1);
-}
+        /* SUBTITLE / TYPEWRITER */
+        .subtitle {
+            color: var(--muted);
+            font-size: .95rem;
+            min-height: 1.4em;
+        }
 
-.btn:hover{
-  transform:translateY(-4px);
-  box-shadow:0 16px 30px #00000099;
-}
+        /* BUTTON GRID */
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-top: 22px;
+        }
 
-.btn i{
-  font-size:1.6rem;
-  color:var(--accent);
-  margin-bottom:6px;
-}
+        /* BUTTON */
+        .btn {
+            padding: 16px 14px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, #ffffff12, #ffffff04);
+            color: var(--text);
+            cursor: pointer;
+            transition: .25s cubic-bezier(.2, .8, .2, 1);
+        }
 
-.btn-title{
-  font-size:1rem;
-  font-weight:800;
-}
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 30px #00000099;
+        }
 
-.btn-desc{
-  font-size:.8rem;
-  color:var(--muted);
-  margin-top:4px;
-  line-height:1.2;
-}
+        .btn i {
+            font-size: 1.6rem;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
 
-/* CONTROLS */
-.controls{
-  margin-top:18px;
-}
+        .btn-title {
+            font-size: 1rem;
+            font-weight: 800;
+        }
 
-.toggle{
-  background:none;
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:8px 16px;
-  border-radius:999px;
-  cursor:pointer;
-  transition:.2s;
-}
+        .btn-desc {
+            font-size: .8rem;
+            color: var(--muted);
+            margin-top: 4px;
+            line-height: 1.2;
+        }
 
-.toggle:hover{
-  background:#ffffff10;
-}
-</style>
+        /* CONTROLS */
+        .controls {
+            margin-top: 18px;
+        }
+
+        .toggle {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .toggle:hover {
+            background: #ffffff10;
+        }
+    </style>
 </head>
 
 <body>
 
-<div id="emoji-layer"></div>
+    <div id="emoji-layer"></div>
 
-<div class="panel">
+    <div class="panel">
 
-  <div class="badge">Portal v3.0</div>
-  <div class="title">🚀 Portal</div>
+        <div class="badge">Portal v3.0</div>
+        <div class="title">🚀 Portal</div>
 
-  <div class="sub-badges">
-    <div class="pill">#1 for gaming website in NH</div>
-    <div class="pill">Mathematically proven to make your day better</div>
-  </div>
+        <div class="sub-badges">
+            <div class="pill">#1 for gaming website in NH</div>
+            <div class="pill">Mathematically proven to make your day better</div>
+        </div>
 
-  <div class="subtitle" id="typewriter"></div>
-  <div class="holiday" id="holidayLine"></div>
+        <div class="subtitle" id="typewriter"></div>
+        <div class="holiday" id="holidayLine"></div>
 
-  <div class="actions">
-    <button class="btn" id="launchBtn">
-      <i class="fas fa-play"></i>
-      <div class="btn-title">Launch Jumpman64</div>
-      <div class="btn-desc">Open jumpman64 in a secret tab</div>
-    </button>
+        <div class="actions">
+            <button class="btn" id="launchBtn">
+                <i class="fas fa-play"></i>
+                <div class="btn-title">Launch Jumpman64</div>
+                <div class="btn-desc">Open jumpman64 in a secret tab</div>
+            </button>
 
-    <a class="btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">
-      <i class="fas fa-bug"></i>
-      <div class="btn-title">Bug Report</div>
-      <div class="btn-desc">Report issues or suggest improvements</div>
-    </a>
+            <a class="btn" href="https://forms.gle/fjTkVHhx3MG8RuzYA" target="_blank">
+                <i class="fas fa-bug"></i>
+                <div class="btn-title">Bug Report</div>
+                <div class="btn-desc">Report issues or suggest improvements</div>
+            </a>
 
-    <button class="btn" id="githubBtn">
-      <i class="fab fa-github"></i>
-      <div class="btn-title">Our App</div>
-      <div class="btn-desc">Open the Jumpman64 web application (PWA) </div>
-    </button>
-  </div>
+            <button class="btn" id="githubBtn">
+                <i class="fab fa-github"></i>
+                <div class="btn-title">Our App</div>
+                <div class="btn-desc">Open the Jumpman64 web application (PWA) </div>
+            </button>
+        </div>
 
-  <div class="controls">
-    <button class="toggle" id="pauseBtn">Pause Emojis</button>
-  </div>
+        <div class="controls">
+            <button class="toggle" id="pauseBtn">Pause Emojis</button>
+        </div>
 
-</div>
+    </div>
 
-<script>
-(() => {
-  'use strict';
+    <script>
+        (() => {
+            'use strict';
 
-  /* ===================== HELPERS ===================== */
-  const $ = id => document.getElementById(id);
+            /* ===================== HELPERS ===================== */
+            const $ = id => document.getElementById(id);
 
-  function sanitizeUrl(url) {
-    try {
-      const u = new URL(url);
-      if (!['http:', 'https:'].includes(u.protocol)) return null;
-      return u.href;
-    } catch {
-      return null;
-    }
-  }
+            function sanitizeUrl(url) {
+                try {
+                    const u = new URL(url);
+                    if (!['http:', 'https:'].includes(u.protocol)) return null;
+                    return u.href;
+                } catch {
+                    return null;
+                }
+            }
 
-  /* ===================== TYPEWRITER ===================== */
-  const typeEl = $('typewriter');
-  if (typeEl) {
-    async function fetchFact() {
-      const controller = new AbortController();
-      setTimeout(() => controller.abort(), 3000);
-      try {
-        const r = await fetch(
-          'https://uselessfacts.jsph.pl/api/v2/facts/random?language=en',
-          { signal: controller.signal }
-        );
-        const j = await r.json();
-        return (j.text || 'Welcome back.').slice(0, 300);
-      } catch {
-        return 'Welcome back.';
-      }
-    }
+            /* ===================== TYPEWRITER ===================== */
+            const typeEl = $('typewriter');
+            if (typeEl) {
+                async function fetchFact() {
+                    const controller = new AbortController();
+                    setTimeout(() => controller.abort(), 3000);
+                    try {
+                        const r = await fetch(
+                            'https://uselessfacts.jsph.pl/api/v2/facts/random?language=en', {
+                                signal: controller.signal
+                            }
+                        );
+                        const j = await r.json();
+                        return (j.text || 'Welcome back.').slice(0, 300);
+                    } catch {
+                        return 'Welcome back.';
+                    }
+                }
 
-    async function startTyping() {
-      const text = await fetchFact();
-      typeEl.textContent = '';
-      let i = 0;
-      const t = setInterval(() => {
-        if (i < text.length) typeEl.textContent += text[i++];
-        else {
-          clearInterval(t);
-          setTimeout(startTyping, 5000);
-        }
-      }, 30);
-    }
-    startTyping();
-  }
+                async function startTyping() {
+                    const text = await fetchFact();
+                    typeEl.textContent = '';
+                    let i = 0;
+                    const t = setInterval(() => {
+                        if (i < text.length) typeEl.textContent += text[i++];
+                        else {
+                            clearInterval(t);
+                            setTimeout(startTyping, 5000);
+                        }
+                    }, 30);
+                }
+                startTyping();
+            }
 
-  /* ===================== EMOJIS ===================== */
-  const emojiLayer = $('emoji-layer');
-  const emojis = ['🎮','🚀','👾','💫','🕹️'];
-  let emojiPaused = false;
+            /* ===================== EMOJIS ===================== */
+            const emojiLayer = $('emoji-layer');
+            const emojis = ['🎮', '🚀', '👾', '💫', '🕹️'];
+            let emojiPaused = false;
 
-  if (emojiLayer) {
-    emojiLayer.style.pointerEvents = 'none';
+            if (emojiLayer) {
+                emojiLayer.style.pointerEvents = 'none';
 
-    for (let i = 0; i < 16; i++) {
-      const e = document.createElement('div');
-      e.className = 'emoji';
-      e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      e.style.left = Math.random() * 100 + 'vw';
-      e.style.top = Math.random() * 100 + 'vh';
-      e.style.animationDuration = 15 + Math.random() * 10 + 's';
-      emojiLayer.appendChild(e);
-    }
-  }
+                for (let i = 0; i < 16; i++) {
+                    const e = document.createElement('div');
+                    e.className = 'emoji';
+                    e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    e.style.left = Math.random() * 100 + 'vw';
+                    e.style.top = Math.random() * 100 + 'vh';
+                    e.style.animationDuration = 15 + Math.random() * 10 + 's';
+                    emojiLayer.appendChild(e);
+                }
+            }
 
-  /* ===================== PAUSE EMOJIS (FIXED) ===================== */
-  const pauseBtn = $('pauseBtn');
-  if (pauseBtn) {
-    pauseBtn.textContent = 'Pause Emojis';
-    pauseBtn.setAttribute('aria-pressed', 'false');
+            /* ===================== PAUSE EMOJIS (FIXED) ===================== */
+            const pauseBtn = $('pauseBtn');
+            if (pauseBtn) {
+                pauseBtn.textContent = 'Pause Emojis';
+                pauseBtn.setAttribute('aria-pressed', 'false');
 
-    pauseBtn.addEventListener('click', () => {
-      emojiPaused = !emojiPaused;
-      document.querySelectorAll('.emoji').forEach(e => {
-        e.style.animationPlayState = emojiPaused ? 'paused' : 'running';
-      });
-      pauseBtn.textContent = emojiPaused ? 'Resume Emojis' : 'Pause Emojis';
-      pauseBtn.setAttribute('aria-pressed', String(emojiPaused));
-    });
-  }
+                pauseBtn.addEventListener('click', () => {
+                    emojiPaused = !emojiPaused;
+                    document.querySelectorAll('.emoji').forEach(e => {
+                        e.style.animationPlayState = emojiPaused ? 'paused' : 'running';
+                    });
+                    pauseBtn.textContent = emojiPaused ? 'Resume Emojis' : 'Pause Emojis';
+                    pauseBtn.setAttribute('aria-pressed', String(emojiPaused));
+                });
+            }
 
-  /* ===================== LAUNCH ===================== */
-  const launchBtn = $('launchBtn');
-  if (launchBtn) {
-    launchBtn.addEventListener('click', () => {
-      const url = sanitizeUrl('https://definitelynotabypass.pages.dev/');
-      if (!url) return;
+            /* ===================== LAUNCH ===================== */
+            const launchBtn = $('launchBtn');
+            if (launchBtn) {
+                launchBtn.addEventListener('click', () => {
+                    const url = sanitizeUrl('https://definitelynotabypass.pages.dev/');
+                    if (!url) return;
 
-      const w = window.open('about:blank', '_blank');
-      if (!w) return alert('Popup blocked');
+                    const w = window.open('about:blank', '_blank');
+                    if (!w) return alert('Popup blocked');
 
-      try { w.opener = null; } catch {}
+                    try {
+                        w.opener = null;
+                    } catch {}
 
-      w.document.write(`
+                    w.document.write(`
         <!doctype html>
         <html>
         <head>
@@ -355,36 +369,39 @@ body{
         </body>
         </html>
       `);
-    });
-  }
+                });
+            }
 
-  /* ===================== GITHUB ===================== */
-  const githubBtn = $('githubBtn');
-  if (githubBtn) {
-    githubBtn.addEventListener('click', () => {
-      const w = window.open('https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html', '_blank');
-      if (w) try { w.opener = null; } catch {}
-    });
-  }
+            /* ===================== GITHUB ===================== */
+            const githubBtn = $('githubBtn');
+            if (githubBtn) {
+                githubBtn.addEventListener('click', () => {
+                    const w = window.open('https://raw.githubusercontent.com/code-andrewy/jumpman64beta/refs/heads/main/app.html', '_blank');
+                    if (w) try {
+                        w.opener = null;
+                    } catch {}
+                });
+            }
 
-  /* ===================== HOLIDAYS (FULL MONTH) ===================== */
-  const holidayLine = $('holidayLine');
-  if (holidayLine) {
-    const m = new Date().getMonth();
-    const holidays = {
-      0: 'Happy New Year 🎉 from Jumpman64',
-      1: 'Happy Valentine’s ❤️ from Jumpman64',
-      2: 'Happy St. Patrick’s 🍀 from Jumpman64',
-      6: 'Happy 4th of July 🇺🇸 from Jumpman64',
-      9: 'Happy Halloween 🎃 from Jumpman64',
-      10: 'Happy Thanksgiving 🦃 from Jumpman64',
-      11: 'Merry Christmas 🎅🌲 from Jumpman64'
-    };
-    holidayLine.textContent = holidays[m] || '';
-  }
+            /* ===================== HOLIDAYS (FULL MONTH) ===================== */
+            const holidayLine = $('holidayLine');
+            if (holidayLine) {
+                const m = new Date().getMonth();
+                const holidays = {
+                    0: 'Happy New Year 🎉 from Jumpman64',
+                    1: 'Happy Valentine’s ❤️ from Jumpman64',
+                    2: 'Happy St. Patrick’s 🍀 from Jumpman64',
+                    6: 'Happy 4th of July 🇺🇸 from Jumpman64',
+                    9: 'Happy Halloween 🎃 from Jumpman64',
+                    10: 'Happy Thanksgiving 🦃 from Jumpman64',
+                    11: 'Merry Christmas 🎅🌲 from Jumpman64'
+                };
+                holidayLine.textContent = holidays[m] || '';
+            }
 
-})();
-</script>
+        })();
+    </script>
 
 </body>
+
 </html>
